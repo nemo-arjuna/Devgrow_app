@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'bookmark_screen.dart'; 
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,40 +12,29 @@ class HomeScreen extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
+              decoration: BoxDecoration(color: Colors.white),
               child: Align(
                 alignment: Alignment.bottomLeft,
                 child: Text(
                   "DevGrow",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 26,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
                 ),
               ),
             ),
             ListTile(
               leading: const Icon(Icons.star_border),
               title: const Text("Rate Us"),
-              onTap: () {
-                Navigator.pop(context);
-              },
+              onTap: () => Navigator.pop(context),
             ),
             ListTile(
               leading: const Icon(Icons.info_outlined),
               title: const Text("About us"),
-              onTap: () {
-                Navigator.pop(context);
-              },
+              onTap: () => Navigator.pop(context),
             ),
             ListTile(
               leading: const Icon(Icons.menu_book),
-              title: const Text("Teams and Conditions"),
-              onTap: () {
-                Navigator.pop(context);
-              },
+              title: const Text("Terms and Conditions"),
+              onTap: () => Navigator.pop(context),
             ),
           ],
         ),
@@ -52,8 +42,8 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        title: Row(
-          children: const [
+        title: const Row(
+          children: [
             Text(
               "DevGrow",
               style: TextStyle(
@@ -160,21 +150,25 @@ class HomeScreen extends StatelessWidget {
 
             // Lecture List
             buildLectureItem(
+              context,
               "lib/assets/dart.jpg",
               "Dart - Introduction",
               "Let's Start Lecture 1",
             ),
             buildLectureItem(
+              context,
               "lib/assets/dart.jpg",
               "main() function in Dart",
               "Let's Start Lecture 2",
             ),
             buildLectureItem(
+              context,
               "lib/assets/dart.jpg",
               "Dart - Data Types",
               "Let's Start Lecture 3",
             ),
             buildLectureItem(
+              context,
               "lib/assets/dart.jpg",
               "String interpolation in Dart",
               "Let's Start Lecture 4",
@@ -182,11 +176,19 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-
-      // Bottom Navigation
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.black,
+        currentIndex: 0,
+        onTap: (index) {
+          if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const BookmarkScreen()),
+            );
+          }
+          // Add other index handling if needed
+        },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
@@ -256,12 +258,12 @@ class HomeScreen extends StatelessWidget {
                 Text(
                   "Get Started",
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: Colors.black,
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                Icon(Icons.arrow_forward, color: Colors.blue, size: 16),
+                Icon(Icons.arrow_forward, color: Colors.black, size: 16),
               ],
             ),
           ),
@@ -270,55 +272,69 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  // Lecture Item Widget
+  // Lecture Item Widget (updated to include context parameter)
   static Widget buildLectureItem(
+    BuildContext context,
     String imgPath,
     String title,
     String subtitle,
   ) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade300,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.asset(
-              imgPath,
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        // Add navigation to lecture detail if needed
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade300,
+              blurRadius: 4,
+              offset: const Offset(0, 2),
             ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  subtitle,
-                  style: const TextStyle(color: Colors.blue, fontSize: 12),
-                ),
-              ],
+          ],
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                imgPath,
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          const Icon(Icons.bookmark_border),
-        ],
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(color: Colors.blue, fontSize: 12),
+                  ),
+                ],
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.bookmark_border),
+              onPressed: () {
+                // Add bookmark functionality here
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('$title bookmarked')),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
