@@ -60,7 +60,7 @@ class BookmarkScreen extends StatelessWidget {
           ],
         ),
       ),
-      // Bottom Navigation Bar (same as home_screen.dart)
+      // Bottom Navigation Bar 
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.black,

@@ -1,6 +1,8 @@
 import 'package:devgrow/screens/dart_theory.dart';
+import 'package:devgrow/screens/flutter_theory.dart';
 import 'package:flutter/material.dart';
 import 'bookmark_screen.dart';
+
 //add
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -96,7 +98,7 @@ class HomeScreen extends StatelessWidget {
                     "lib/assets/syntax.jpg",
                     "Flutter",
                     "11+ Flutter",
-                    null,
+                    const FlutterTheoryPage(),
                   ),
                   buildCategoryCard(
                     context,
