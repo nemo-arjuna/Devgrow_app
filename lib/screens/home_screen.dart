@@ -1,5 +1,6 @@
+import 'package:devgrow/screens/dart_theory.dart';
 import 'package:flutter/material.dart';
-import 'bookmark_screen.dart'; 
+import 'bookmark_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,7 +15,7 @@ class HomeScreen extends StatelessWidget {
             const DrawerHeader(
               decoration: BoxDecoration(color: Colors.white),
               child: Align(
-                alignment: Alignment.bottomLeft,
+                alignment: Alignment.topLeft,
                 child: Text(
                   "DevGrow",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
@@ -42,17 +43,13 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        title: const Row(
-          children: [
-            Text(
-              "DevGrow",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
+        title: const Text(
+          "DevGrow",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
@@ -74,57 +71,95 @@ class HomeScreen extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 children: [
                   buildCategoryCard(
+                    context,
                     "lib/assets/practicals.jpg",
                     "Practical",
                     "110+ Practicals",
+                    null,
                   ),
                   buildCategoryCard(
+                    context,
                     "lib/assets/syntax.jpg",
                     "Syntax",
                     "80+ Syntax",
+                    null,
                   ),
-                  buildCategoryCard("lib/assets/dart.jpg", "Dart", "45+ Dart"),
                   buildCategoryCard(
+                    context,
+                    "lib/assets/dart.jpg",
+                    "Dart",
+                    "40+ Dart Theory",
+                    const DartTheoryPage(),
+                  ),
+                  buildCategoryCard(
+                    context,
                     "lib/assets/syntax.jpg",
                     "Flutter",
                     "11+ Flutter",
+                    null,
                   ),
                   buildCategoryCard(
+                    context,
                     "lib/assets/syntax.jpg",
                     "Question",
                     "20+ Question",
+                    null,
                   ),
                   buildCategoryCard(
+                    context,
                     "lib/assets/syntax.jpg",
                     "Quiz",
                     "Quiz test",
+                    null,
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 16),
 
-            // Search Bar
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(color: Colors.grey.shade300),
-              ),
-              child: Row(
-                children: const [
-                  Icon(Icons.search, color: Colors.grey),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Search",
-                        border: InputBorder.none,
-                      ),
-                    ),
+            // Search Bar (Bigger + Auto Focus Navigation)
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    transitionDuration: const Duration(milliseconds: 350),
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        const DartTheoryPage(autoFocusSearch: true),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
                   ),
-                ],
+                );
+              },
+              child: Container(
+                height: 45, // search
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(28),
+                  border: Border.all(color: Colors.grey.shade300),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color.fromARGB(255, 230, 230, 230),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: const [
+                    Icon(Icons.search, color: Colors.grey, size: 26),
+                    SizedBox(width: 16),
+                    Text(
+                      "Search...",
+                      style: TextStyle(color: Colors.grey, fontSize: 16),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 20),
@@ -187,7 +222,6 @@ class HomeScreen extends StatelessWidget {
               MaterialPageRoute(builder: (context) => const BookmarkScreen()),
             );
           }
-          // Add other index handling if needed
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
@@ -203,92 +237,34 @@ class HomeScreen extends StatelessWidget {
 
   // Category Card Widget
   static Widget buildCategoryCard(
-    String imgPath,
-    String title,
-    String subtitle,
-  ) {
-    return Container(
-      width: 140,
-      margin: const EdgeInsets.only(right: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade300,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            child: Image.asset(
-              imgPath,
-              height: 80,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  subtitle,
-                  style: const TextStyle(color: Colors.grey, fontSize: 12),
-                ),
-              ],
-            ),
-          ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "Get Started",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Icon(Icons.arrow_forward, color: Colors.black, size: 16),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Lecture Item Widget (updated to include context parameter)
-  static Widget buildLectureItem(
     BuildContext context,
     String imgPath,
     String title,
     String subtitle,
+    Widget? navigateTo,
   ) {
     return GestureDetector(
       onTap: () {
-        // Add navigation to lecture detail if needed
+        if (navigateTo != null) {
+          Navigator.of(context).push(
+            PageRouteBuilder(
+              transitionDuration: const Duration(milliseconds: 350),
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  navigateTo,
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
+            ),
+          );
+        }
       },
       child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.all(8),
+        width: 140,
+        margin: const EdgeInsets.only(right: 12),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.shade300,
@@ -297,19 +273,22 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16),
+              ),
               child: Image.asset(
                 imgPath,
-                width: 50,
-                height: 50,
+                height: 80,
+                width: double.infinity,
                 fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(width: 12),
-            Expanded(
+            Padding(
+              padding: const EdgeInsets.all(8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -319,22 +298,92 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Text(
                     subtitle,
-                    style: const TextStyle(color: Colors.blue, fontSize: 12),
+                    style: const TextStyle(color: Colors.grey, fontSize: 12),
                   ),
                 ],
               ),
             ),
-            IconButton(
-              icon: const Icon(Icons.bookmark_border),
-              onPressed: () {
-                // Add bookmark functionality here
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('$title bookmarked')),
-                );
-              },
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    "Get Started",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Icon(Icons.arrow_forward, color: Colors.black, size: 16),
+                ],
+              ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  // Lecture Item Widget
+  static Widget buildLectureItem(
+    BuildContext context,
+    String imgPath,
+    String title,
+    String subtitle,
+  ) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.asset(
+              imgPath,
+              width: 50,
+              height: 50,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  subtitle,
+                  style: const TextStyle(color: Colors.blue, fontSize: 12),
+                ),
+              ],
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.bookmark_border),
+            onPressed: () {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text('$title bookmarked')));
+            },
+          ),
+        ],
       ),
     );
   }
