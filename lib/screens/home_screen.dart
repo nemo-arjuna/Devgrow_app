@@ -1,11 +1,39 @@
-import 'package:devgrow/screens/dart_theory.dart';
-import 'package:devgrow/screens/flutter_theory.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/category_provider.dart';
+import '../providers/material_provider.dart';
 import 'bookmark_screen.dart';
-//add
-//add
-class HomeScreen extends StatelessWidget {
+import 'material_list_page.dart';
+import 'material_detail_page.dart';
+import 'dart_theory.dart';
+import '../models/material_model.dart';
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // load kategori + materi awal
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      print("Initializing data...");
+      try {
+        await Future.wait([
+          Provider.of<CategoryProvider>(context, listen: false)
+              .fetchCategories(),
+          Provider.of<MaterialProvider>(context, listen: false).fetchAll(),
+        ]);
+        print("Data initialization completed");
+      } catch (e) {
+        print("Error initializing data: $e");
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,79 +94,43 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Horizontal Cards
+            // 🔹 Horizontal Cards → dinamis dari CategoryProvider
             SizedBox(
               height: 165,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  buildCategoryCard(
-                    context,
-                    "lib/assets/practicals.jpg",
-                    "Practical",
-                    "110+ Practicals",
-                    null,
-                  ),
-                  buildCategoryCard(
-                    context,
-                    "lib/assets/syntax.jpg",
-                    "Syntax",
-                    "80+ Syntax",
-                    null,
-                  ),
-                  buildCategoryCard(
-                    context,
-                    "lib/assets/dart.jpg",
-                    "Dart",
-                    "40+ Dart Theory",
-                    const DartTheoryPage(),
-                  ),
-                  buildCategoryCard(
-                    context,
-                    "lib/assets/syntax.jpg",
-                    "Flutter",
-                    "11+ Flutter",
-                    const FlutterTheoryPage(),
-                  ),
-                  buildCategoryCard(
-                    context,
-                    "lib/assets/syntax.jpg",
-                    "Question",
-                    "20+ Question",
-                    null,
-                  ),
-                  buildCategoryCard(
-                    context,
-                    "lib/assets/syntax.jpg",
-                    "Quiz",
-                    "Quiz test",
-                    null,
-                  ),
-                ],
+              child: Consumer<CategoryProvider>(
+                builder: (context, categoryProvider, child) {
+                  if (categoryProvider.isLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (categoryProvider.categories.isEmpty) {
+                    return const Center(child: Text("No categories found"));
+                  }
+                  return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categoryProvider.categories.length,
+                    itemBuilder: (context, index) {
+                      final category = categoryProvider.categories[index];
+                      return buildCategoryCard(
+                        context,
+                        category.image ?? "lib/assets/syntax.jpg",
+                        category.name,
+                        "Materi ${category.name}",
+                        category.id!,
+                      );
+                    },
+                  );
+                },
               ),
             ),
             const SizedBox(height: 16),
 
-            // Search Bar (Bigger + Auto Focus Navigation)
+            // 🔹 Search Bar
             GestureDetector(
               onTap: () {
-                Navigator.of(context).push(
-                  PageRouteBuilder(
-                    transitionDuration: const Duration(milliseconds: 350),
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        const DartTheoryPage(autoFocusSearch: true),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                          return FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          );
-                        },
-                  ),
-                );
+                // nanti bisa diarahkan ke search page
               },
               child: Container(
-                height: 45, // search
+                height: 45,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -166,7 +158,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-            // Lectures Header
+            // 🔹 Lectures Header
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
@@ -185,34 +177,28 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 12),
 
-            // Lecture List
-            buildLectureItem(
-              context,
-              "lib/assets/dart.jpg",
-              "Dart - Introduction",
-              "Let's Start Lecture 1",
-            ),
-            buildLectureItem(
-              context,
-              "lib/assets/dart.jpg",
-              "main() function in Dart",
-              "Let's Start Lecture 2",
-            ),
-            buildLectureItem(
-              context,
-              "lib/assets/dart.jpg",
-              "Dart - Data Types",
-              "Let's Start Lecture 3",
-            ),
-            buildLectureItem(
-              context,
-              "lib/assets/dart.jpg",
-              "String interpolation in Dart",
-              "Let's Start Lecture 4",
+            // 🔹 Lecture List → dinamis dari MaterialProvider
+            Consumer<MaterialProvider>(
+              builder: (context, materialProvider, child) {
+                if (materialProvider.isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (materialProvider.materials.isEmpty) {
+                  return const Center(child: Text("No lectures found"));
+                }
+                return Column(
+                  children: materialProvider.materials
+                      .take(4) // tampilkan 4 lecture terbaru
+                      .map((m) => buildLectureItem(context, m))
+                      .toList(),
+                );
+              },
             ),
           ],
         ),
       ),
+
+      // 🔹 Bottom Navigation
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.black,
@@ -237,26 +223,29 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  // Category Card Widget
-  static Widget buildCategoryCard(
+  // 🔹 Category Card Widget
+  Widget buildCategoryCard(
     BuildContext context,
     String imgPath,
     String title,
     String subtitle,
-    Widget? navigateTo,
+    int categoryId,
   ) {
     return GestureDetector(
       onTap: () {
-        if (navigateTo != null) {
+        if (title.toLowerCase() == 'dart') {
           Navigator.of(context).push(
-            PageRouteBuilder(
-              transitionDuration: const Duration(milliseconds: 350),
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  navigateTo,
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                    return FadeTransition(opacity: animation, child: child);
-                  },
+            MaterialPageRoute(builder: (_) => const DartTheoryPage()),
+          );
+        } else {
+          Provider.of<MaterialProvider>(context, listen: false)
+              .fetchByCategory(categoryId);
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => MaterialListPage(
+                categoryId: categoryId,
+                categoryName: title,
+              ),
             ),
           );
         }
@@ -294,10 +283,8 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
+                  Text(title,
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
                   Text(
                     subtitle,
                     style: const TextStyle(color: Colors.grey, fontSize: 12),
@@ -329,63 +316,78 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  // Lecture Item Widget
-  static Widget buildLectureItem(
-    BuildContext context,
-    String imgPath,
-    String title,
-    String subtitle,
-  ) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade300,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+  // 🔹 Lecture Item Widget → pakai MaterialModel
+  Widget buildLectureItem(BuildContext context, MaterialModel material) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => MaterialDetailPage(material: material),
           ),
-        ],
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.asset(
-              imgPath,
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade300,
+              blurRadius: 4,
+              offset: const Offset(0, 2),
             ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  subtitle,
-                  style: const TextStyle(color: Colors.blue, fontSize: 12),
-                ),
-              ],
+          ],
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                material.image ?? "lib/assets/dart.jpg",
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.bookmark_border),
-            onPressed: () {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text('$title bookmarked')));
-            },
-          ),
-        ],
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(material.title,
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                  Text(
+                    material.content ?? "",
+                    style: const TextStyle(color: Colors.blue, fontSize: 12),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                material.isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+              ),
+              onPressed: () {
+                Provider.of<MaterialProvider>(context, listen: false)
+                    .toggleBookmark(material);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      material.isBookmarked
+                          ? '${material.title} bookmarked'
+                          : '${material.title} removed from bookmarks',
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

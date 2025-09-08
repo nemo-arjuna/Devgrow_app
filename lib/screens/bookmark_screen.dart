@@ -1,7 +1,26 @@
 import 'package:flutter/material.dart';
-//add
-class BookmarkScreen extends StatelessWidget {
+import 'package:provider/provider.dart';
+import '../providers/material_provider.dart';
+import '../providers/dart_theory_provider.dart';
+import '../models/material_model.dart';
+import '../models/dart_theory_model.dart';
+class BookmarkScreen extends StatefulWidget {
   const BookmarkScreen({super.key});
+
+  @override
+  State<BookmarkScreen> createState() => _BookmarkScreenState();
+}
+
+class _BookmarkScreenState extends State<BookmarkScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Memuat data saat screen dibuka
+    Future.microtask(() {
+      context.read<MaterialProvider>().fetchAll();
+      context.read<DartTheoryProvider>().fetchTheories();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,35 +45,57 @@ class BookmarkScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 12),
 
-            // Bookmark List using buildLectureItem style
+            // Bookmark List
             Expanded(
-              child: ListView(
-                children: [
-                  buildLectureItem(
-                    context,
-                    "lib/assets/dart.jpg",
-                    "Dart - Introduction",
-                    "Let's Start Lecture 1",
-                  ),
-                  buildLectureItem(
-                    context,
-                    "lib/assets/dart.jpg",
-                    "main() function in Dart",
-                    "Let's Start Lecture 2",
-                  ),
-                  buildLectureItem(
-                    context,
-                    "lib/assets/dart.jpg",
-                    "Dart - Data Types",
-                    "Let's Start Lecture 3",
-                  ),
-                  buildLectureItem(
-                    context,
-                    "lib/assets/dart.jpg",
-                    "String interpolation in Dart",
-                    "Let's Start Lecture 4",
-                  ),
-                ],
+              child: Consumer2<MaterialProvider, DartTheoryProvider>(
+                builder: (context, materialProvider, dartTheoryProvider, _) {
+                  // Get bookmarked materials
+                  final bookmarkedMaterials = materialProvider.materials
+                      .where((m) => m.isBookmarked)
+                      .toList();
+
+                  // Get bookmarked dart theories
+                  final bookmarkedTheories = dartTheoryProvider.theories
+                      .where((t) => t.isBookmarked)
+                      .toList();
+
+                  if (materialProvider.isLoading || dartTheoryProvider.isLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  if (bookmarkedMaterials.isEmpty && bookmarkedTheories.isEmpty) {
+                    return const Center(
+                      child: Text(
+                        "No bookmarks yet",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    );
+                  }
+
+                  return ListView(
+                    children: [
+                      // Bookmarked Materials
+                      ...bookmarkedMaterials.map(
+                        (material) => buildMaterialItem(
+                          context,
+                          material,
+                          () => materialProvider.toggleBookmark(material),
+                        ),
+                      ),
+
+                      // Bookmarked Dart Theories
+                      ...bookmarkedTheories.map(
+                        (theory) => buildDartTheoryItem(
+                          context,
+                          theory,
+                          () async {
+                            await dartTheoryProvider.toggleBookmark(theory.id);
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ],
@@ -89,12 +130,10 @@ class BookmarkScreen extends StatelessWidget {
     );
   }
 
-  // Replica of your buildLectureItem function from home_screen.dart
-  static Widget buildLectureItem(
+  Widget buildMaterialItem(
     BuildContext context,
-    String imgPath,
-    String title,
-    String subtitle,
+    MaterialModel material,
+    VoidCallback onBookmarkTap,
   ) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -115,7 +154,7 @@ class BookmarkScreen extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.asset(
-              imgPath,
+              material.image ?? "lib/assets/dart.jpg",
               width: 50,
               height: 50,
               fit: BoxFit.cover,
@@ -127,17 +166,77 @@ class BookmarkScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  material.title,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  subtitle,
+                  material.content ?? "",
+                  style: const TextStyle(color: Colors.blue, fontSize: 12),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.bookmark, color: Colors.blue),
+            onPressed: onBookmarkTap,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildDartTheoryItem(
+    BuildContext context,
+    DartTheoryModel theory,
+    VoidCallback onBookmarkTap,
+  ) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.asset(
+              theory.image,
+              width: 50,
+              height: 50,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  theory.title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  theory.subtitle,
                   style: const TextStyle(color: Colors.blue, fontSize: 12),
                 ),
               ],
             ),
           ),
-          const Icon(Icons.bookmark, color: Colors.blue),
+          IconButton(
+            icon: const Icon(Icons.bookmark, color: Colors.blue),
+            onPressed: onBookmarkTap,
+          ),
         ],
       ),
     );

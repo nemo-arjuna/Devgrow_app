@@ -31,8 +31,18 @@
 
   <title>devgrow</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- SQLite setup -->
+  <script>
+    if (!window.sqlite3) {
+      window.sqlite3 = {};
+    }
+    window.sqlite3.wasmBinary = 'sqlite3.wasm';
+  </script>
 </head>
 <body>
+  <!-- Add sqlite3 wasm binary -->
+  <script src="sqlite3.js"></script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
