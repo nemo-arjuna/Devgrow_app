@@ -53,9 +53,19 @@ class MaterialProvider with ChangeNotifier {
   }
 
   Future<void> toggleBookmark(MaterialModel material) async {
-    await DBHelper.instance
-        .toggleBookmark(material.id!, !material.isBookmarked);
-    await fetchAll(); // refresh list
+    try {
+      await DBHelper.instance.toggleBookmark(material.id!, !material.isBookmarked);
+      // Update the local state of the material
+      material.isBookmarked = !material.isBookmarked;
+      notifyListeners();
+      // Refresh the list to ensure we have the latest data
+      if (kIsWeb) {
+        _materials = await DBHelper.instance.getAllMaterials();
+        notifyListeners();
+      }
+    } catch (e) {
+      print("Error toggling bookmark: $e");
+    }
   }
 
   Future<void> fetchBookmarked() async {

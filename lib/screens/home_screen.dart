@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/category_provider.dart';
-import '../providers/material_provider.dart';
+import '../providers/dart_theory_provider.dart';
 import 'bookmark_screen.dart';
 import 'material_list_page.dart';
-import 'material_detail_page.dart';
 import 'dart_theory.dart';
-import '../models/material_model.dart';
+import 'flutter_theory.dart';
+import '../models/dart_theory_model.dart';
+import 'practical.dart';
+import 'syntax.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,7 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
         await Future.wait([
           Provider.of<CategoryProvider>(context, listen: false)
               .fetchCategories(),
-          Provider.of<MaterialProvider>(context, listen: false).fetchAll(),
+          Provider.of<DartTheoryProvider>(context, listen: false)
+              .fetchTheories(),
         ]);
         print("Data initialization completed");
       } catch (e) {
@@ -177,19 +180,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 12),
 
-            // 🔹 Lecture List → dinamis dari MaterialProvider
-            Consumer<MaterialProvider>(
-              builder: (context, materialProvider, child) {
-                if (materialProvider.isLoading) {
+            // 🔹 Lecture List → menampilkan materi Dart Theory
+            Consumer<DartTheoryProvider>(
+              builder: (context, dartTheoryProvider, child) {
+                if (dartTheoryProvider.isLoading) {
                   return const Center(child: CircularProgressIndicator());
                 }
-                if (materialProvider.materials.isEmpty) {
+                if (dartTheoryProvider.theories.isEmpty) {
                   return const Center(child: Text("No lectures found"));
                 }
                 return Column(
-                  children: materialProvider.materials
+                  children: dartTheoryProvider.theories
                       .take(4) // tampilkan 4 lecture terbaru
-                      .map((m) => buildLectureItem(context, m))
+                      .map((theory) => buildLectureItem(context, theory))
                       .toList(),
                 );
               },
@@ -237,9 +240,20 @@ class _HomeScreenState extends State<HomeScreen> {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (_) => const DartTheoryPage()),
           );
+        } else if (title.toLowerCase() == 'flutter') {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const FlutterTheoryPage()),
+          );
+        } else if (title.toLowerCase() == 'practical') {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => PracticalsPage()),
+          );
+        } else if (title.toLowerCase() == 'syntax') {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => SyntaxPage()),
+          );
         } else {
-          Provider.of<MaterialProvider>(context, listen: false)
-              .fetchByCategory(categoryId);
+          // Only navigate to page without fetching category materials
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) => MaterialListPage(
@@ -301,12 +315,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     "Get Started",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Color.fromARGB(255, 27, 177, 247),
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  Icon(Icons.arrow_forward, color: Colors.black, size: 16),
+                  Icon(Icons.arrow_forward,
+                      color: Color.fromARGB(255, 27, 177, 247), size: 16),
                 ],
               ),
             ),
@@ -316,14 +331,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // 🔹 Lecture Item Widget → pakai MaterialModel
-  Widget buildLectureItem(BuildContext context, MaterialModel material) {
+  // 🔹 Lecture Item Widget → pakai DartTheoryModel
+  Widget buildLectureItem(BuildContext context, DartTheoryModel theory) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => MaterialDetailPage(material: material),
+            builder: (_) => const DartTheoryPage(),
           ),
         );
       },
@@ -346,7 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.asset(
-                material.image ?? "lib/assets/dart.jpg",
+                theory.image,
                 width: 50,
                 height: 50,
                 fit: BoxFit.cover,
@@ -357,10 +372,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(material.title,
+                  Text(theory.title,
                       style: const TextStyle(fontWeight: FontWeight.bold)),
                   Text(
-                    material.content ?? "",
+                    theory.subtitle,
                     style: const TextStyle(color: Colors.blue, fontSize: 12),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -370,17 +385,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             IconButton(
               icon: Icon(
-                material.isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                theory.isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                color: theory.isBookmarked ? Colors.blue : null,
               ),
-              onPressed: () {
-                Provider.of<MaterialProvider>(context, listen: false)
-                    .toggleBookmark(material);
+              onPressed: () async {
+                await Provider.of<DartTheoryProvider>(context, listen: false)
+                    .toggleBookmark(theory.id);
+                if (!context.mounted) return;
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      material.isBookmarked
-                          ? '${material.title} bookmarked'
-                          : '${material.title} removed from bookmarks',
+                      theory.isBookmarked
+                          ? '${theory.title} removed from bookmarks'
+                          : '${theory.title} bookmarked',
                     ),
                   ),
                 );

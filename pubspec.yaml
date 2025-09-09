@@ -30,4 +30,9 @@ flutter:
     - lib/assets/practicals.jpg
     - lib/assets/syntax.jpg
     - lib/assets/dart.jpg
-    - lib/assets/lecture.jpg
+    - lib/assets/flutter.png
+    - lib/assets/flutter_category.jpg
+    - lib/assets/dart_category.jpg
+    - lib/assets/practical_category.jpg
+    - lib/assets/syntax_category.jpg
+    - lib/assets/quiz_category.jpg

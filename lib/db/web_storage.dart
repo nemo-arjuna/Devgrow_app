@@ -3,10 +3,12 @@ import 'dart:convert';
 import '../models/category_model.dart';
 import '../models/material_model.dart';
 import '../models/dart_theory_model.dart';
+import '../models/flutter_theory_model.dart';
 
 class WebStorage {
   static const String categoriesKey = 'categories';
   static const String materialsKey = 'materials';
+  static const String flutterTheoriesKey = 'flutter_theories';
 
   // Initialize with seed data if empty
   static void initializeIfEmpty() {
@@ -19,15 +21,20 @@ class WebStorage {
     if (!html.window.localStorage.containsKey(dartTheoriesKey)) {
       _seedDartTheories();
     }
+    if (!html.window.localStorage.containsKey(flutterTheoriesKey)) {
+      _seedFlutterTheories();
+    }
+    // Uncomment line below to reset data (for development only)
+    // resetDatabase();
   }
 
   static void _seedCategories() {
     final categories = [
-      {'id': 1, 'name': 'Practical', 'image': 'lib/assets/practicals.jpg'},
-      {'id': 2, 'name': 'Syntax', 'image': 'lib/assets/syntax.jpg'},
-      {'id': 3, 'name': 'Dart', 'image': 'lib/assets/dart.jpg'},
-      {'id': 4, 'name': 'Flutter', 'image': 'lib/assets/dart.jpg'},
-      {'id': 5, 'name': 'Quiz', 'image': 'lib/assets/lecture.jpg'},
+      {'id': 1, 'name': 'Practical', 'image': 'lib/assets/practical_category.jpg'},
+      {'id': 2, 'name': 'Syntax', 'image': 'lib/assets/syntax_category.jpg'},
+      {'id': 3, 'name': 'Dart', 'image': 'lib/assets/dart_category.jpg'},
+      {'id': 4, 'name': 'Flutter', 'image': 'lib/assets/flutter_category.jpg'},
+      {'id': 5, 'name': 'Quiz', 'image': 'lib/assets/quiz_category.jpg'},
     ];
     html.window.localStorage[categoriesKey] = json.encode(categories);
   }
@@ -41,7 +48,7 @@ class WebStorage {
             'Contoh implementasi Provider untuk state management di Flutter.',
         'categoryId': 1,
         'isBookmarked': 0,
-        'image': 'lib/assets/practicals.jpg'
+        'image': 'lib/assets/practical_category.jpg'
       },
       {
         'id': 2,
@@ -50,7 +57,7 @@ class WebStorage {
             'Penjelasan tentang variable, tipe data, dan type inference di Dart.',
         'categoryId': 2,
         'isBookmarked': 0,
-        'image': 'lib/assets/syntax.jpg'
+        'image': 'lib/assets/syntax_category.jpg'
       },
       {
         'id': 3,
@@ -58,7 +65,7 @@ class WebStorage {
         'content': 'Ringkasan sintaks dasar dan contoh.',
         'categoryId': 3,
         'isBookmarked': 0,
-        'image': 'lib/assets/dart.jpg'
+        'image': 'lib/assets/dart_category.jpg'
       },
       {
         'id': 4,
@@ -67,7 +74,7 @@ class WebStorage {
             'Mengenal widget dasar: StatelessWidget, StatefulWidget, layout dasar.',
         'categoryId': 4,
         'isBookmarked': 0,
-        'image': 'lib/assets/dart.jpg'
+        'image': 'lib/assets/flutter_category.jpg'
       },
       {
         'id': 5,
@@ -75,7 +82,7 @@ class WebStorage {
         'content': 'Kumpulan soal untuk menguji pengetahuan dasar Dart.',
         'categoryId': 5,
         'isBookmarked': 0,
-        'image': 'lib/assets/lecture.jpg'
+        'image': 'lib/assets/quiz_category.jpg'
       },
     ];
     html.window.localStorage[materialsKey] = json.encode(materials);
@@ -104,9 +111,10 @@ class WebStorage {
     List<dynamic> jsonData = json.decode(data);
     int index = jsonData.indexWhere((item) => item['id'] == id);
     if (index != -1) {
-      jsonData[index]['isBookmarked'] =
-          jsonData[index]['isBookmarked'] == 0 ? 1 : 0;
+      jsonData[index]['isBookmarked'] = jsonData[index]['isBookmarked'] == 0 ? 1 : 0;
+      // Save the updated data back to localStorage
       html.window.localStorage[materialsKey] = json.encode(jsonData);
+      print('Bookmark toggled for material $id, new value: ${jsonData[index]['isBookmarked']}');
     }
   }
 
@@ -116,15 +124,139 @@ class WebStorage {
         .toList();
   }
 
+  static List<MaterialModel> getBookmarkedMaterials() {
+    return getAllMaterials()
+        .where((material) => material.isBookmarked)
+        .toList();
+  }
+
   static const String dartTheoriesKey = 'dart_theories';
 
   static void resetDatabase() {
     html.window.localStorage.remove(categoriesKey);
     html.window.localStorage.remove(materialsKey);
     html.window.localStorage.remove(dartTheoriesKey);
+    html.window.localStorage.remove(flutterTheoriesKey);
     _seedCategories();
     _seedMaterials();
     _seedDartTheories();
+    _seedFlutterTheories();
+  }
+
+  static List<FlutterTheoryModel> getAllFlutterTheories() {
+    final String? data = html.window.localStorage[flutterTheoriesKey];
+    if (data == null) return [];
+
+    List<dynamic> jsonData = json.decode(data);
+    return jsonData.map((item) => FlutterTheoryModel.fromMap(item)).toList();
+  }
+
+  static void toggleFlutterTheoryBookmark(int id) {
+    final String? data = html.window.localStorage[flutterTheoriesKey];
+    if (data == null) return;
+
+    List<dynamic> jsonData = json.decode(data);
+    int index = jsonData.indexWhere((item) => item['id'] == id);
+    if (index != -1) {
+      jsonData[index]['isBookmarked'] =
+          jsonData[index]['isBookmarked'] == 0 ? 1 : 0;
+      html.window.localStorage[flutterTheoriesKey] = json.encode(jsonData);
+    }
+  }
+
+  static void _seedFlutterTheories() {
+    final theories = [
+      {
+        'id': 1,
+        'title': 'Flutter - Introduction',
+        'subtitle': "Let's Start Lecture 1",
+        'content': 'Introduction to Flutter framework and its features.',
+        'image': 'lib/assets/flutter.png',
+        'isBookmarked': 0
+      },
+      {
+        'id': 2,
+        'title': 'Advantages of Flutter',
+        'subtitle': "Let's Start Lecture 2",
+        'content': 'Understanding the basics of widgets in Flutter.',
+        'image': 'lib/assets/flutter.png',
+        'isBookmarked': 0
+      },
+      {
+        'id': 3,
+        'title': 'Disadvantages of Flutter',
+        'subtitle': "Let's Start Lecture 3",
+        'content':
+            'Understanding the difference between stateless and stateful widgets.',
+        'image': 'lib/assets/flutter.png',
+        'isBookmarked': 0
+      },
+      {
+        'id': 4,
+        'title': 'Apps build with Flutter',
+        'subtitle': "Let's Start Lecture 4",
+        'content': 'Understanding layout widgets like Row, Column, Stack, etc.',
+        'image': 'lib/assets/flutter.png',
+        'isBookmarked': 0
+      },
+      {
+        'id': 5,
+        'title': 'Instalation of Flutter',
+        'subtitle': "Let's Start Lecture 5",
+        'content': 'Implementing Material Design in Flutter.',
+        'image': 'lib/assets/flutter.png',
+        'isBookmarked': 0
+      },
+      {
+        'id': 6,
+        'title': 'Architecture of Flutter',
+        'subtitle': "Let's Start Lecture 6",
+        'content': 'Implementing Material Design in Flutter.',
+        'image': 'lib/assets/flutter.png',
+        'isBookmarked': 0
+      },
+      {
+        'id': 7,
+        'title': 'Types of Layout widgets',
+        'subtitle': "Let's Start Lecture 7",
+        'content': 'Implementing Material Design in Flutter.',
+        'image': 'lib/assets/flutter.png',
+        'isBookmarked': 0
+      },
+      {
+        'id': 8,
+        'title': 'Single Child Wisgets',
+        'subtitle': "Let's Start Lecture 8",
+        'content': 'Implementing Material Design in Flutter.',
+        'image': 'lib/assets/flutter.png',
+        'isBookmarked': 0
+      },
+      {
+        'id': 9,
+        'title': 'Multiple Child Widgets',
+        'subtitle': "Let's Start Lecture 9",
+        'content': 'Implementing Material Design in Flutter.',
+        'image': 'lib/assets/flutter.png',
+        'isBookmarked': 0
+      },
+      {
+        'id': 10,
+        'title': 'Stateful and Stateless Widgets',
+        'subtitle': "Let's Start Lecture 10",
+        'content': 'Implementing Material Design in Flutter.',
+        'image': 'lib/assets/flutter.png',
+        'isBookmarked': 0
+      },
+      {
+        'id': 11,
+        'title': 'Handling gestures in Flutter',
+        'subtitle': "Let's Start Lecture 11",
+        'content': 'Implementing Material Design in Flutter.',
+        'image': 'lib/assets/flutter.png',
+        'isBookmarked': 0
+      },
+    ];
+    html.window.localStorage[flutterTheoriesKey] = json.encode(theories);
   }
 
   static void _seedDartTheories() {

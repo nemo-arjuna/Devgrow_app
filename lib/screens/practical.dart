@@ -1237,7 +1237,7 @@ void main() {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Practicals"),
+        title: const Text("Practicals", style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: false,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),

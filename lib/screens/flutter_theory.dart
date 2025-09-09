@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/flutter_theory_provider.dart';
 
-//add
-//add
 class FlutterTheoryPage extends StatefulWidget {
   final bool autoFocusSearch;
 
   const FlutterTheoryPage({Key? key, this.autoFocusSearch = false})
-    : super(key: key);
+      : super(key: key);
 
   @override
   State<FlutterTheoryPage> createState() => _FlutterTheoryPageState();
@@ -16,67 +16,12 @@ class _FlutterTheoryPageState extends State<FlutterTheoryPage> {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
 
-  // Data asli lectures
-  final List<Map<String, String>> _allLectures = [
-    {
-      "img": "lib/assets/dart.jpg",
-      "title": "Dart - Introduction",
-      "subtitle": "Let's Start Lecture 1",
-    },
-    {
-      "img": "lib/assets/dart.jpg",
-      "title": "main() function in Dart",
-      "subtitle": "Let's Start Lecture 2",
-    },
-    {
-      "img": "lib/assets/dart.jpg",
-      "title": "Dart - Data Types",
-      "subtitle": "Let's Start Lecture 3",
-    },
-    {
-      "img": "lib/assets/dart.jpg",
-      "title": "String Interpolation in Dart",
-      "subtitle": "Let's Start Lecture 4",
-    },
-    {
-      "img": "lib/assets/dart.jpg",
-      "title": "Comments in Dart",
-      "subtitle": "Let's Start Lecture 5",
-    },
-    {
-      "img": "lib/assets/dart.jpg",
-      "title": "String in Dart",
-      "subtitle": "Let's Start Lecture 6",
-    },
-    {
-      "img": "lib/assets/dart.jpg",
-      "title": "String Properties in Dart",
-      "subtitle": "Let's Start Lecture 7",
-    },
-    {
-      "img": "lib/assets/dart.jpg",
-      "title": "String Methods in Dart",
-      "subtitle": "Let's Start Lecture 8",
-    },
-    {
-      "img": "lib/assets/dart.jpg",
-      "title": "Constructors in Dart",
-      "subtitle": "Let's Start Lecture 9",
-    },
-    {
-      "img": "lib/assets/dart.jpg",
-      "title": "Constructors in Dart",
-      "subtitle": "Let's Start Lecture 10",
-    },
-  ];
-
-  // Data yang difilter
-  List<Map<String, String>> _filteredLectures = [];
-
   @override
   void initState() {
     super.initState();
-    _filteredLectures = List.from(_allLectures);
+    Future.microtask(() {
+      context.read<FlutterTheoryProvider>().fetchTheories();
+    });
 
     if (widget.autoFocusSearch) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -84,17 +29,10 @@ class _FlutterTheoryPageState extends State<FlutterTheoryPage> {
       });
     }
 
-    _searchController.addListener(_filterLectures);
-  }
-
-  void _filterLectures() {
-    final query = _searchController.text.toLowerCase();
-    setState(() {
-      _filteredLectures = _allLectures.where((lecture) {
-        final title = lecture["title"]!.toLowerCase();
-        final subtitle = lecture["subtitle"]!.toLowerCase();
-        return title.contains(query) || subtitle.contains(query);
-      }).toList();
+    _searchController.addListener(() {
+      context
+          .read<FlutterTheoryProvider>()
+          .setSearchQuery(_searchController.text);
     });
   }
 
@@ -106,10 +44,10 @@ class _FlutterTheoryPageState extends State<FlutterTheoryPage> {
   }
 
   Widget buildLectureItem(
+    BuildContext context,
     String imgPath,
     String title,
     String subtitle,
-    int index,
   ) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -145,14 +83,23 @@ class _FlutterTheoryPageState extends State<FlutterTheoryPage> {
                   title,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(
-                  subtitle,
-                  style: const TextStyle(color: Colors.blue, fontSize: 12),
+                Row(
+                  children: [
+                    Text(
+                      subtitle,
+                      style: const TextStyle(color: Colors.blue, fontSize: 12),
+                    ),
+                    const SizedBox(width: 4),
+                    const Icon(
+                      Icons.arrow_forward,
+                      color: Colors.blue,
+                      size: 14,
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
-          Icon(Icons.arrow_forward),
         ],
       ),
     );
@@ -198,26 +145,37 @@ class _FlutterTheoryPageState extends State<FlutterTheoryPage> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: _filteredLectures.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: _filteredLectures.length,
-                      itemBuilder: (context, index) {
-                        final lecture = _filteredLectures[index];
-                        final actualIndex = _allLectures.indexOf(lecture);
-                        return buildLectureItem(
-                          lecture["img"]!,
-                          lecture["title"]!,
-                          lecture["subtitle"]!,
-                          actualIndex,
-                        );
-                      },
-                    )
-                  : const Center(
+              child: Consumer<FlutterTheoryProvider>(
+                builder: (context, provider, child) {
+                  if (provider.isLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  final theories = provider.filteredTheories;
+
+                  if (theories.isEmpty) {
+                    return const Center(
                       child: Text(
                         "No results found",
                         style: TextStyle(color: Colors.grey),
                       ),
-                    ),
+                    );
+                  }
+
+                  return ListView.builder(
+                    itemCount: theories.length,
+                    itemBuilder: (context, index) {
+                      final theory = theories[index];
+                      return buildLectureItem(
+                        context,
+                        theory.image,
+                        theory.title,
+                        theory.subtitle,
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),

@@ -146,7 +146,7 @@ class SyntaxPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Syntaxes"),
+        title: const Text("Syntaxes", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         centerTitle: false,
         leading: IconButton(
         icon: const Icon(Icons.arrow_back),

@@ -17,7 +17,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
     super.initState();
     // Memuat data saat screen dibuka
     Future.microtask(() {
-      context.read<MaterialProvider>().fetchAll();
+      context.read<MaterialProvider>().fetchBookmarked();
       context.read<DartTheoryProvider>().fetchTheories();
     });
   }
@@ -49,10 +49,8 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
             Expanded(
               child: Consumer2<MaterialProvider, DartTheoryProvider>(
                 builder: (context, materialProvider, dartTheoryProvider, _) {
-                  // Get bookmarked materials
-                  final bookmarkedMaterials = materialProvider.materials
-                      .where((m) => m.isBookmarked)
-                      .toList();
+                  // Materials are already filtered in fetchBookmarked
+                  final bookmarkedMaterials = materialProvider.materials;
 
                   // Get bookmarked dart theories
                   final bookmarkedTheories = dartTheoryProvider.theories

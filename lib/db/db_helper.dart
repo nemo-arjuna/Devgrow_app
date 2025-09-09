@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import '../models/material_model.dart';
 import '../models/category_model.dart';
 import '../models/dart_theory_model.dart';
+import '../models/flutter_theory_model.dart';
 import 'web_storage.dart';
 
 class DBHelper {
@@ -64,9 +65,21 @@ class DBHelper {
       )
     ''');
 
+    await db.execute('''
+      CREATE TABLE flutter_theories(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        subtitle TEXT NOT NULL,
+        content TEXT,
+        image TEXT,
+        isBookmarked INTEGER DEFAULT 0
+      )
+    ''');
+
     await _seedCategories(db);
     await _seedMaterials(db);
     await _seedDartTheories(db);
+    await _seedFlutterTheories(db);
   }
 
   Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -349,24 +362,37 @@ class DBHelper {
   }
 
   Future<List<MaterialModel>> getBookmarkedMaterials() async {
-    final db = await database;
-    final res = await db.query(
-      'materials',
-      where: 'isBookmarked = ?',
-      whereArgs: [1],
-      orderBy: 'id ASC',
-    );
-    return res.map((e) => MaterialModel.fromMap(e)).toList();
+    if (kIsWeb) {
+      // Web platform: use WebStorage
+      return WebStorage.getBookmarkedMaterials();
+    } else {
+      // Android platform: use SQLite
+      final db = await database;
+      final res = await db.query(
+        'materials',
+        where: 'isBookmarked = ?',
+        whereArgs: [1],
+        orderBy: 'id ASC',
+      );
+      return res.map((e) => MaterialModel.fromMap(e)).toList();
+    }
   }
 
   Future<int> toggleBookmark(int id, bool bookmarked) async {
-    final db = await database;
-    return await db.update(
-      'materials',
-      {'isBookmarked': bookmarked ? 1 : 0},
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    if (kIsWeb) {
+      // Web platform: use WebStorage
+      WebStorage.toggleBookmark(id);
+      return 1; // Return success
+    } else {
+      // Android platform: use SQLite
+      final db = await database;
+      return await db.update(
+        'materials',
+        {'isBookmarked': bookmarked ? 1 : 0},
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+    }
   }
 
   // =========================
@@ -409,20 +435,88 @@ class DBHelper {
     }
   }
 
-  Future<void> seedDartTheories(Database db) async {
+  // =========================
+  // 🔹 FLUTTER THEORIES
+  // =========================
+  Future<List<FlutterTheoryModel>> getAllFlutterTheories() async {
+    try {
+      if (kIsWeb) {
+        // Web platform: use WebStorage
+        final theories = WebStorage.getAllFlutterTheories();
+        print("Found ${theories.length} flutter theories in web storage");
+        return theories;
+      } else {
+        // Android platform: use SQLite
+        final db = await database;
+        final res = await db.query('flutter_theories', orderBy: 'id ASC');
+        print("Found ${res.length} flutter theories in database");
+        return res.map((e) => FlutterTheoryModel.fromMap(e)).toList();
+      }
+    } catch (e) {
+      print("Error getting flutter theories: $e");
+      return [];
+    }
+  }
+
+  Future<int> toggleFlutterTheoryBookmark(int id, bool bookmarked) async {
+    if (kIsWeb) {
+      // Web platform: use WebStorage
+      WebStorage.toggleFlutterTheoryBookmark(id);
+      return 1; // Return success
+    } else {
+      // Android platform: use SQLite
+      final db = await database;
+      return await db.update(
+        'flutter_theories',
+        {'isBookmarked': bookmarked ? 1 : 0},
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+    }
+  }
+
+  Future<void> _seedFlutterTheories(Database db) async {
     final theories = [
       {
-        'title': 'Dart - Introduction',
-        'subtitle': "Let's Start Lecture 1",
+        'title': 'Flutter - Introduction',
+        'subtitle': "Let's Start Flutter Lecture 1",
+        'content': 'Introduction to Flutter framework and its features.',
         'image': 'lib/assets/dart.jpg',
-        'content': 'Introduction to Dart programming language...',
         'isBookmarked': 0
       },
-      // ... add all your theories here
+      {
+        'title': 'Widgets in Flutter',
+        'subtitle': "Let's Start Flutter Lecture 2",
+        'content': 'Understanding the basics of widgets in Flutter.',
+        'image': 'lib/assets/dart.jpg',
+        'isBookmarked': 0
+      },
+      {
+        'title': 'StatelessWidget vs StatefulWidget',
+        'subtitle': "Let's Start Flutter Lecture 3",
+        'content':
+            'Understanding the difference between stateless and stateful widgets.',
+        'image': 'lib/assets/dart.jpg',
+        'isBookmarked': 0
+      },
+      {
+        'title': 'Layout Widgets',
+        'subtitle': "Let's Start Flutter Lecture 4",
+        'content': 'Understanding layout widgets like Row, Column, Stack, etc.',
+        'image': 'lib/assets/dart.jpg',
+        'isBookmarked': 0
+      },
+      {
+        'title': 'Material Design',
+        'subtitle': "Let's Start Flutter Lecture 5",
+        'content': 'Implementing Material Design in Flutter.',
+        'image': 'lib/assets/dart.jpg',
+        'isBookmarked': 0
+      }
     ];
 
     for (var theory in theories) {
-      await db.insert('dart_theories', theory);
+      await db.insert('flutter_theories', theory);
     }
   }
 
