@@ -30,11 +30,16 @@ class WebStorage {
 
   static void _seedCategories() {
     final categories = [
-      {'id': 1, 'name': 'Practical', 'image': 'lib/assets/practical_category.jpg'},
+      {
+        'id': 1,
+        'name': 'Practical',
+        'image': 'lib/assets/practical_category.jpg'
+      },
       {'id': 2, 'name': 'Syntax', 'image': 'lib/assets/syntax_category.jpg'},
       {'id': 3, 'name': 'Dart', 'image': 'lib/assets/dart_category.jpg'},
       {'id': 4, 'name': 'Flutter', 'image': 'lib/assets/flutter_category.jpg'},
       {'id': 5, 'name': 'Quiz', 'image': 'lib/assets/quiz_category.jpg'},
+      {'id': 6, 'name': 'Question', 'image': 'lib/assets/question.png'},
     ];
     html.window.localStorage[categoriesKey] = json.encode(categories);
   }
@@ -84,6 +89,14 @@ class WebStorage {
         'isBookmarked': 0,
         'image': 'lib/assets/quiz_category.jpg'
       },
+      {
+        'id': 6,
+        'title': 'Question: Common Programming Problems',
+        'content': 'Kumpulan soal dan jawaban untuk latihan pemrograman.',
+        'categoryId': 6,
+        'isBookmarked': 0,
+        'image': 'lib/assets/question.png'
+      },
     ];
     html.window.localStorage[materialsKey] = json.encode(materials);
   }
@@ -111,10 +124,12 @@ class WebStorage {
     List<dynamic> jsonData = json.decode(data);
     int index = jsonData.indexWhere((item) => item['id'] == id);
     if (index != -1) {
-      jsonData[index]['isBookmarked'] = jsonData[index]['isBookmarked'] == 0 ? 1 : 0;
+      jsonData[index]['isBookmarked'] =
+          jsonData[index]['isBookmarked'] == 0 ? 1 : 0;
       // Save the updated data back to localStorage
       html.window.localStorage[materialsKey] = json.encode(jsonData);
-      print('Bookmark toggled for material $id, new value: ${jsonData[index]['isBookmarked']}');
+      print(
+          'Bookmark toggled for material $id, new value: ${jsonData[index]['isBookmarked']}');
     }
   }
 

@@ -9,6 +9,7 @@ import 'flutter_theory.dart';
 import '../models/dart_theory_model.dart';
 import 'practical.dart';
 import 'syntax.dart';
+import 'question.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -130,7 +131,30 @@ class _HomeScreenState extends State<HomeScreen> {
             // 🔹 Search Bar
             GestureDetector(
               onTap: () {
-                // nanti bisa diarahkan ke search page
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        const DartTheoryPage(autoFocusSearch: true),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      const begin = Offset(1.0, 0.0);
+                      const end = Offset.zero;
+                      const curve = Curves.easeInOutCubic;
+
+                      var tween = Tween(begin: begin, end: end)
+                          .chain(CurveTween(curve: curve));
+
+                      var offsetAnimation = animation.drive(tween);
+
+                      return SlideTransition(
+                        position: offsetAnimation,
+                        child: child,
+                      );
+                    },
+                    transitionDuration: const Duration(milliseconds: 500),
+                  ),
+                );
               },
               child: Container(
                 height: 45,
@@ -152,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Icon(Icons.search, color: Colors.grey, size: 26),
                     SizedBox(width: 16),
                     Text(
-                      "Search...",
+                      "Search Lecture...",
                       style: TextStyle(color: Colors.grey, fontSize: 16),
                     ),
                   ],
@@ -251,6 +275,10 @@ class _HomeScreenState extends State<HomeScreen> {
         } else if (title.toLowerCase() == 'syntax') {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (_) => SyntaxPage()),
+          );
+        } else if (title.toLowerCase() == 'question') {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => QuestionPage()),
           );
         } else {
           // Only navigate to page without fetching category materials

@@ -54,7 +54,8 @@ class MaterialProvider with ChangeNotifier {
 
   Future<void> toggleBookmark(MaterialModel material) async {
     try {
-      await DBHelper.instance.toggleBookmark(material.id!, !material.isBookmarked);
+      await DBHelper.instance
+          .toggleBookmark(material.id!, !material.isBookmarked);
       // Update the local state of the material
       material.isBookmarked = !material.isBookmarked;
       notifyListeners();

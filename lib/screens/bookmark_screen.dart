@@ -4,6 +4,7 @@ import '../providers/material_provider.dart';
 import '../providers/dart_theory_provider.dart';
 import '../models/material_model.dart';
 import '../models/dart_theory_model.dart';
+
 class BookmarkScreen extends StatefulWidget {
   const BookmarkScreen({super.key});
 
@@ -57,11 +58,13 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                       .where((t) => t.isBookmarked)
                       .toList();
 
-                  if (materialProvider.isLoading || dartTheoryProvider.isLoading) {
+                  if (materialProvider.isLoading ||
+                      dartTheoryProvider.isLoading) {
                     return const Center(child: CircularProgressIndicator());
                   }
 
-                  if (bookmarkedMaterials.isEmpty && bookmarkedTheories.isEmpty) {
+                  if (bookmarkedMaterials.isEmpty &&
+                      bookmarkedTheories.isEmpty) {
                     return const Center(
                       child: Text(
                         "No bookmarks yet",
@@ -99,7 +102,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
           ],
         ),
       ),
-      // Bottom Navigation Bar 
+      // Bottom Navigation Bar
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.black,
