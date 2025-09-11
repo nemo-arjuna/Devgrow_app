@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import '../db/db_helper.dart';
 import '../models/dart_theory_model.dart';
 
-class DartTheoryProvider with ChangeNotifier {
+class DartTheoryProvider extends ChangeNotifier {
   List<DartTheoryModel> _theories = [];
   bool _isLoading = false;
   String _searchQuery = '';

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import '../db/db_helper.dart';
 import '../models/material_model.dart';
 
-class MaterialProvider with ChangeNotifier {
+class MaterialProvider extends ChangeNotifier {
   List<MaterialModel> _materials = [];
   List<MaterialModel> get materials => _materials;
 
@@ -42,9 +42,7 @@ class MaterialProvider with ChangeNotifier {
     try {
       _materials = await DBHelper.instance.getMaterialsByCategory(categoryId);
     } catch (e) {
-      if (kDebugMode) {
-        print("Error fetching materials by category: $e");
-      }
+      print("Error fetching materials by category: $e");
       _materials = [];
     }
 
@@ -60,10 +58,8 @@ class MaterialProvider with ChangeNotifier {
       material.isBookmarked = !material.isBookmarked;
       notifyListeners();
       // Refresh the list to ensure we have the latest data
-      if (kIsWeb) {
-        _materials = await DBHelper.instance.getAllMaterials();
-        notifyListeners();
-      }
+      _materials = await DBHelper.instance.getAllMaterials();
+      notifyListeners();
     } catch (e) {
       print("Error toggling bookmark: $e");
     }
@@ -76,9 +72,7 @@ class MaterialProvider with ChangeNotifier {
     try {
       _materials = await DBHelper.instance.getBookmarkedMaterials();
     } catch (e) {
-      if (kDebugMode) {
-        print("Error fetching bookmarked: $e");
-      }
+      print("Error fetching bookmarked: $e");
       _materials = [];
     }
 

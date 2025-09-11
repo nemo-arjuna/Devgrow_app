@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import '../db/db_helper.dart';
 import '../models/category_model.dart';
 
-class CategoryProvider with ChangeNotifier {
+class CategoryProvider extends ChangeNotifier {
   List<CategoryModel> _categories = [];
   bool _isLoading = false;
 

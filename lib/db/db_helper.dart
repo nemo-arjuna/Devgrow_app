@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import '../models/material_model.dart';
 import '../models/category_model.dart';
 import '../models/dart_theory_model.dart';
 import '../models/flutter_theory_model.dart';
-import 'web_storage.dart';
 
 class DBHelper {
   DBHelper._privateConstructor();
@@ -115,13 +113,6 @@ class DBHelper {
   // =========================
   Future<void> resetDatabase() async {
     print("Starting database reset...");
-    if (kIsWeb) {
-      // Web platform: use WebStorage
-      WebStorage.resetDatabase();
-      print("Web storage reset completed");
-      return;
-    }
-
     final db = await database;
 
     // Drop and recreate tables
@@ -269,18 +260,10 @@ class DBHelper {
   // =========================
   Future<List<CategoryModel>> getAllCategories() async {
     try {
-      if (kIsWeb) {
-        // Web platform: use WebStorage
-        final categories = WebStorage.getAllCategories();
-        print("Found ${categories.length} categories in web storage");
-        return categories;
-      } else {
-        // Android platform: use SQLite
-        final db = await database;
-        final res = await db.query('categories', orderBy: 'id ASC');
-        print("Found ${res.length} categories in database");
-        return res.map((c) => CategoryModel.fromMap(c)).toList();
-      }
+      final db = await database;
+      final res = await db.query('categories', orderBy: 'id ASC');
+      print("Found ${res.length} categories in database");
+      return res.map((c) => CategoryModel.fromMap(c)).toList();
     } catch (e) {
       print("Error getting categories: $e");
       return [];
@@ -297,18 +280,10 @@ class DBHelper {
 
   Future<List<MaterialModel>> getAllMaterials() async {
     try {
-      if (kIsWeb) {
-        // Web platform: use WebStorage
-        final materials = WebStorage.getAllMaterials();
-        print("Found ${materials.length} materials in web storage");
-        return materials;
-      } else {
-        // Android platform: use SQLite
-        final db = await database;
-        final res = await db.query('materials', orderBy: 'id ASC');
-        print("Found ${res.length} materials in database");
-        return res.map((e) => MaterialModel.fromMap(e)).toList();
-      }
+      final db = await database;
+      final res = await db.query('materials', orderBy: 'id ASC');
+      print("Found ${res.length} materials in database");
+      return res.map((e) => MaterialModel.fromMap(e)).toList();
     } catch (e) {
       print("Error getting materials: $e");
       return [];
@@ -362,37 +337,24 @@ class DBHelper {
   }
 
   Future<List<MaterialModel>> getBookmarkedMaterials() async {
-    if (kIsWeb) {
-      // Web platform: use WebStorage
-      return WebStorage.getBookmarkedMaterials();
-    } else {
-      // Android platform: use SQLite
-      final db = await database;
-      final res = await db.query(
-        'materials',
-        where: 'isBookmarked = ?',
-        whereArgs: [1],
-        orderBy: 'id ASC',
-      );
-      return res.map((e) => MaterialModel.fromMap(e)).toList();
-    }
+    final db = await database;
+    final res = await db.query(
+      'materials',
+      where: 'isBookmarked = ?',
+      whereArgs: [1],
+      orderBy: 'id ASC',
+    );
+    return res.map((e) => MaterialModel.fromMap(e)).toList();
   }
 
   Future<int> toggleBookmark(int id, bool bookmarked) async {
-    if (kIsWeb) {
-      // Web platform: use WebStorage
-      WebStorage.toggleBookmark(id);
-      return 1; // Return success
-    } else {
-      // Android platform: use SQLite
-      final db = await database;
-      return await db.update(
-        'materials',
-        {'isBookmarked': bookmarked ? 1 : 0},
-        where: 'id = ?',
-        whereArgs: [id],
-      );
-    }
+    final db = await database;
+    return await db.update(
+      'materials',
+      {'isBookmarked': bookmarked ? 1 : 0},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 
   // =========================
@@ -400,18 +362,10 @@ class DBHelper {
   // =========================
   Future<List<DartTheoryModel>> getAllDartTheories() async {
     try {
-      if (kIsWeb) {
-        // Web platform: use WebStorage
-        final theories = WebStorage.getAllDartTheories();
-        print("Found ${theories.length} dart theories in web storage");
-        return theories;
-      } else {
-        // Android platform: use SQLite
-        final db = await database;
-        final res = await db.query('dart_theories', orderBy: 'id ASC');
-        print("Found ${res.length} dart theories in database");
-        return res.map((e) => DartTheoryModel.fromMap(e)).toList();
-      }
+      final db = await database;
+      final res = await db.query('dart_theories', orderBy: 'id ASC');
+      print("Found ${res.length} dart theories in database");
+      return res.map((e) => DartTheoryModel.fromMap(e)).toList();
     } catch (e) {
       print("Error getting dart theories: $e");
       return [];
@@ -419,20 +373,13 @@ class DBHelper {
   }
 
   Future<int> toggleDartTheoryBookmark(int id, bool bookmarked) async {
-    if (kIsWeb) {
-      // Web platform: use WebStorage
-      WebStorage.toggleDartTheoryBookmark(id);
-      return 1; // Return success
-    } else {
-      // Android platform: use SQLite
-      final db = await database;
-      return await db.update(
-        'dart_theories',
-        {'isBookmarked': bookmarked ? 1 : 0},
-        where: 'id = ?',
-        whereArgs: [id],
-      );
-    }
+    final db = await database;
+    return await db.update(
+      'dart_theories',
+      {'isBookmarked': bookmarked ? 1 : 0},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 
   // =========================
@@ -440,18 +387,10 @@ class DBHelper {
   // =========================
   Future<List<FlutterTheoryModel>> getAllFlutterTheories() async {
     try {
-      if (kIsWeb) {
-        // Web platform: use WebStorage
-        final theories = WebStorage.getAllFlutterTheories();
-        print("Found ${theories.length} flutter theories in web storage");
-        return theories;
-      } else {
-        // Android platform: use SQLite
-        final db = await database;
-        final res = await db.query('flutter_theories', orderBy: 'id ASC');
-        print("Found ${res.length} flutter theories in database");
-        return res.map((e) => FlutterTheoryModel.fromMap(e)).toList();
-      }
+      final db = await database;
+      final res = await db.query('flutter_theories', orderBy: 'id ASC');
+      print("Found ${res.length} flutter theories in database");
+      return res.map((e) => FlutterTheoryModel.fromMap(e)).toList();
     } catch (e) {
       print("Error getting flutter theories: $e");
       return [];
@@ -459,20 +398,13 @@ class DBHelper {
   }
 
   Future<int> toggleFlutterTheoryBookmark(int id, bool bookmarked) async {
-    if (kIsWeb) {
-      // Web platform: use WebStorage
-      WebStorage.toggleFlutterTheoryBookmark(id);
-      return 1; // Return success
-    } else {
-      // Android platform: use SQLite
-      final db = await database;
-      return await db.update(
-        'flutter_theories',
-        {'isBookmarked': bookmarked ? 1 : 0},
-        where: 'id = ?',
-        whereArgs: [id],
-      );
-    }
+    final db = await database;
+    return await db.update(
+      'flutter_theories',
+      {'isBookmarked': bookmarked ? 1 : 0},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 
   Future<void> _seedFlutterTheories(Database db) async {
