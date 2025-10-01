@@ -1,0 +1,15 @@
+1. What skills are required to use Flutter?
+2. Explain what Flutter is.
+3. What are the advantages of using Flutter?
+4. Described what a statelesswidget is.
+5. Described what a stateful widget is.
+6. Explain what a key is in Flutter.
+7. Explain what a ticker is in Flutter.
+8. Name some limitation of Flutter.
+9. Explain what a Flutter widget is.
+10. Explain what pubsec.yaml files are for.
+11. Explain whta the setState{} method does.
+12. Describe what the conntainer class does in Flutter.
+13. What is the main elements of Flutter?
+14. What's the use of Navigation.push in Flutter?
+15. What's the role of image.network{} constructor in Flutter?
