@@ -34,7 +34,7 @@ class DartIntroductionPage extends StatelessWidget {
             // Gambar
             Center(
               child: Image.asset(
-                "lib/assets/dart_intro.jpg",
+                "assets/dart_intro.png",
                 height: 100,
               ),
             ),

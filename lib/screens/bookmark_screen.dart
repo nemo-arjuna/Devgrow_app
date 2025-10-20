@@ -115,7 +115,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
         },
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.maps_home_work_rounded),
             label: "Home",
           ),
           BottomNavigationBarItem(

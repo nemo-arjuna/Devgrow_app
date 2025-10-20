@@ -17,6 +17,8 @@ dependencies:
   path: ^1.9.1
   provider: ^6.1.5+1
   shared_preferences: ^2.2.2
+  audioplayers: ^6.5.1
+  confetti: ^0.7.0
 
 dev_dependencies:
   flutter_test:
@@ -27,13 +29,42 @@ flutter:
   uses-material-design: true
 
   assets:
-    - lib/assets/practicals.jpg
-    - lib/assets/syntax.jpg
-    - lib/assets/dart.jpg
-    - lib/assets/flutter.png
-    - lib/assets/flutter_category.jpg
-    - lib/assets/dart_category.jpg
-    - lib/assets/practical_category.jpg
-    - lib/assets/syntax_category.jpg
-    - lib/assets/quiz_category.jpg
-    - lib/assets/question.png
+    - assets/practicals.jpg
+    - assets/syntax.jpg
+    - assets/dart.jpg
+    - assets/flutter.png
+    - assets/flutter_category.jpg
+    - assets/dart_category.jpg
+    - assets/practical_category.jpg
+    - assets/syntax_category.jpg
+    - assets/quiz_category.jpg
+    - assets/question.png
+    - assets/bg_quiz.jpg
+    - assets/bg_bricks.jpeg
+    - assets/bg_dart_quiz.jpg
+    - assets/level_1.png
+    - assets/level_2.png
+    - assets/level_3.png
+    - assets/bg_level.jpg
+    - assets/bg_quizlvl1.jpg
+    - assets/stone_button.png
+    - assets/quiz_button.png
+    - assets/ice_button.png
+    - assets/bg_lvl2.jpg
+    - assets/bg_lvl3.jpg
+    - assets/fire_button.png
+    - assets/flutter_quiz_bg.jpg
+    - assets/button_start.png
+    - assets/dart_intro.png
+
+   #sounds
+    - assets/sounds/punch.mp3
+    - assets/sounds/countdown.mp3
+    - assets/sounds/quiz_sound.mp3
+    - assets/sounds/crack.mp3
+
+
+  fonts:
+    - family: Minecraft
+      fonts:
+        - asset: assets/fonts/Minecraft.ttf

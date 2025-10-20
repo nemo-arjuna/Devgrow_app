@@ -1,9 +1,9 @@
+import 'quiz_category/quiz.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/category_provider.dart';
 import '../providers/dart_theory_provider.dart';
 import 'bookmark_screen.dart';
-import 'material_list_page.dart';
 import 'dart_theory.dart';
 import 'dart_category/dart_introduction.dart';
 import 'flutter_theory.dart';
@@ -11,8 +11,9 @@ import '../models/dart_theory_model.dart';
 import 'practical.dart';
 import 'syntax.dart';
 import 'question.dart';
-import 'growpoints.dart';
-
+import 'dart_category/main_function.dart';
+import 'dart_category/dart_datatypes.dart';
+import 'dart_category/string_interpolation_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -49,11 +50,21 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.white),
+            Container(
+              height: 140,
+              padding: const EdgeInsets.only(left: 16, bottom: 8),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: 0.5,
+                  ),
+                ),
+              ),
               child: Align(
-                alignment: Alignment.topLeft,
-                child: Text(
+                alignment: Alignment.bottomLeft,
+                child: const Text(
                   "DevGrow",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
                 ),
@@ -112,14 +123,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (categoryProvider.categories.isEmpty) {
                     return const Center(child: Text("No categories found"));
                   }
+                  // Filter kategori quiz
+                  final filteredCategories = categoryProvider.categories
+                      .where(
+                          (category) => category.name.toLowerCase() != 'quiz')
+                      .toList();
+
                   return ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: categoryProvider.categories.length,
+                    itemCount: filteredCategories.length,
                     itemBuilder: (context, index) {
-                      final category = categoryProvider.categories[index];
+                      final category = filteredCategories[index];
                       return buildCategoryCard(
                         context,
-                        category.image ?? "lib/assets/syntax.jpg",
+                        category.image ?? "assets/syntax.jpg",
                         category.name,
                         "Materi ${category.name}",
                         category.id!,
@@ -237,26 +254,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // 🔹 Bottom Navigation
       bottomNavigationBar: BottomNavigationBar(
-      selectedItemColor: Colors.blue,
-      unselectedItemColor: Colors.black,
-      currentIndex: 0, // ini nanti bisa diset dinamis biar tab aktif sesuai halaman
-      onTap: (index) {
-         if (index == 1) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const BookmarkScreen()),
-        );
-       } else if (index == 2) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const GrowPointsScreen()),
-      );
-    }
-  },
-          items: const [
-           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-           BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: "Bookmark"),
-           BottomNavigationBarItem(icon: Icon(Icons.stars), label: "Growpoints"),
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.black,
+        currentIndex:
+            0, // ini nanti bisa diset dinamis biar tab aktif sesuai halaman
+        onTap: (index) {
+          if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const BookmarkScreen()),
+            );
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const RPGQuizApp()),
+            );
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.bookmark), label: "Bookmark"),
+          BottomNavigationBarItem(icon: Icon(Icons.stars), label: "Quiz"),
         ],
       ),
     );
@@ -291,16 +310,6 @@ class _HomeScreenState extends State<HomeScreen> {
         } else if (title.toLowerCase() == 'question') {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (_) => QuestionPage()),
-          );
-        } else {
-          // Only navigate to page without fetching category materials
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => MaterialListPage(
-                categoryId: categoryId,
-                categoryName: title,
-              ),
-            ),
           );
         }
       },
@@ -386,7 +395,23 @@ class _HomeScreenState extends State<HomeScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => const DartTheoryPage(),
+              builder: (_) => const DartMainFunctionPage(),
+            ),
+          );
+        }
+        {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const DartDataTypesPage(),
+            ),
+          );
+        }
+        {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const StringInterpolationPage(),
             ),
           );
         }

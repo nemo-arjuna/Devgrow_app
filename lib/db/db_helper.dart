@@ -165,12 +165,12 @@ class DBHelper {
   // =========================
   Future<void> _seedCategories(Database db) async {
     final categories = [
-      {'name': 'Practical', 'image': 'lib/assets/practicals.jpg'},
-      {'name': 'Syntax', 'image': 'lib/assets/syntax.jpg'},
-      {'name': 'Dart', 'image': 'lib/assets/dart_category.jpg'},
-      {'name': 'Flutter', 'image': 'lib/assets/flutter_category.jpg'},
-      {'name': 'Question', 'image': 'lib/assets/question.png'},
-      {'name': 'Quiz', 'image': 'lib/assets/quiz_category.jpg'},
+      {'name': 'Practical', 'image': 'assets/practicals.jpg'},
+      {'name': 'Syntax', 'image': 'assets/syntax.jpg'},
+      {'name': 'Dart', 'image': 'assets/dart_category.jpg'},
+      {'name': 'Flutter', 'image': 'assets/flutter_category.jpg'},
+      {'name': 'Question', 'image': 'assets/question.png'},
+      {'name': 'Quiz', 'image': 'assets/quiz_category.jpg'},
     ];
 
     for (var c in categories) {
@@ -185,294 +185,294 @@ class DBHelper {
         'subtitle': "Let's Start Lecture 1",
         'content':
             'Introduction to Dart programming language and its features.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'main() function in Dart',
         'subtitle': "Let's Start Lecture 2",
         'content': 'Understanding the entry point of Dart applications.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Dart - Data Types',
         'subtitle': "Let's Start Lecture 3",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'String Interpolation in Dart',
         'subtitle': "Let's Start Lecture 4",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Comments in Dart',
         'subtitle': "Let's Start Lecture 5",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'String in Dart',
         'subtitle': "Let's Start Lecture 6",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'String Properties in Dart',
         'subtitle': "Let's Start Lecture 7",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'String Methods in Dart',
         'subtitle': "Let's Start Lecture 8",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Constructors in Dart',
         'subtitle': "Let's Start Lecture 9",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Enumerations in Dart',
         'subtitle': "Let's Start Lecture 10",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Inheritance in Dart',
         'subtitle': "Let's Start Lecture 11",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Iterables in Dart',
         'subtitle': "Let's Start Lecture 12",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'List in Dart',
         'subtitle': "Let's Start Lecture 13",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Loop in Dart',
         'subtitle': "Let's Start Lecture 14",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Maps in Dart',
         'subtitle': "Let's Start Lecture 15",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Methods in Dart',
         'subtitle': "Let's Start Lecture 16",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Queue in Dart',
         'subtitle': "Let's Start Lecture 17",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Runes in Dart',
         'subtitle': "Let's Start Lecture 18",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Set in Dart',
         'subtitle': "Let's Start Lecture 19",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Mixins in Dart',
         'subtitle': "Let's Start Lecture 20",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Const and Final Keyword in Dart',
         'subtitle': "Let's Start Lecture 21",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'If Else Statement in Dart',
         'subtitle': "Let's Start Lecture 22",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'for Loop in Dart',
         'subtitle': "Let's Start Lecture 23",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'While loop in Dart',
         'subtitle': "Let's Start Lecture 24",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Do-While Loop in Dart',
         'subtitle': "Let's Start Lecture 25",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Loop Control Statements in Dart',
         'subtitle': "Let's Start Lecture 26",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Switch Case Statements in Dart',
         'subtitle': "Let's Start Lecture 27",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Types of Operations in Dart',
         'subtitle': "Let's Start Lecture 28",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Different Types of Functions in Dart',
         'subtitle': "Let's Start Lecture 29",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Optional Parameters in Dart',
         'subtitle': "Let's Start Lecture 30",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Anonymous Functions in Dart',
         'subtitle': "Let's Start Lecture 31",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Lexical Scoping in Dart',
         'subtitle': "Let's Start Lecture 32",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Exception Handling in Dart',
         'subtitle': "Let's Start Lecture 33",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Super Keyword in Dart',
         'subtitle': "Let's Start Lecture 34",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'This Keyword in Dart',
         'subtitle': "Let's Start Lecture 35",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'OOP in Dart',
         'subtitle': "Let's Start Lecture 36",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Class in Dart',
         'subtitle': "Let's Start Lecture 37",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Object in Dart',
         'subtitle': "Let's Start Lecture 38",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Encapsulation in Dart',
         'subtitle': "Let's Start Lecture 39",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Getter and Setter in Dart',
         'subtitle': "Let's Start Lecture 40",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Polymorphism in Dart',
         'subtitle': "Let's Start Lecture 41",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
       {
         'title': 'Generics in Dart',
         'subtitle': "Let's Start Lecture 42",
         'content': 'Overview of different data types in Dart.',
-        'image': 'lib/assets/dart.jpg',
+        'image': 'assets/dart.jpg',
         'isBookmarked': 0
       },
     ];
@@ -490,7 +490,7 @@ class DBHelper {
             'Contoh implementasi Provider untuk state management di Flutter.',
         'categoryId': 1,
         'isBookmarked': 0,
-        'image': 'lib/assets/practicals.jpg'
+        'image': 'assets/practicals.jpg'
       },
       {
         'title': 'Dart Variables and Types',
@@ -498,14 +498,14 @@ class DBHelper {
             'Penjelasan tentang variable, tipe data, dan type inference di Dart.',
         'categoryId': 2,
         'isBookmarked': 0,
-        'image': 'lib/assets/syntax.jpg'
+        'image': 'assets/syntax.jpg'
       },
       {
         'title': 'Introduction to Dart',
         'content': 'Ringkasan sintaks dasar dan contoh.',
         'categoryId': 3,
         'isBookmarked': 0,
-        'image': 'lib/assets/dart.jpg'
+        'image': 'assets/dart.jpg'
       },
       {
         'title': 'Flutter Widgets 101',
@@ -513,7 +513,7 @@ class DBHelper {
             'Mengenal widget dasar: StatelessWidget, StatefulWidget, layout dasar.',
         'categoryId': 4,
         'isBookmarked': 0,
-        'image': 'lib/assets/flutter_category.jpg'
+        'image': 'assets/flutter_category.jpg'
       },
       {
         'title': 'Flutter Widgets 101',
@@ -521,14 +521,14 @@ class DBHelper {
             'Mengenal widget dasar: StatelessWidget, StatefulWidget, layout dasar.',
         'categoryId': 4,
         'isBookmarked': 0,
-        'image': 'lib/assets/question.png'
+        'image': 'assets/question.png'
       },
       {
         'title': 'Quiz: Dart Basics',
         'content': 'Kumpulan soal untuk menguji pengetahuan dasar Dart.',
         'categoryId': 5,
         'isBookmarked': 0,
-        'image': 'lib/assets/quiz_category.jpg'
+        'image': 'assets/quiz_category.jpg'
       },
     ];
 
@@ -543,14 +543,14 @@ class DBHelper {
         'title': 'Flutter - Introduction',
         'subtitle': "Let's Start Flutter Lecture 1",
         'content': 'Introduction to Flutter framework and its features.',
-        'image': 'lib/assets/flutter.png',
+        'image': 'assets/flutter.png',
         'isBookmarked': 0
       },
       {
         'title': 'Advantages of Flutter',
         'subtitle': "Let's Start Flutter Lecture 2",
         'content': 'Understanding the basics of widgets in Flutter.',
-        'image': 'lib/assets/flutter.png',
+        'image': 'assets/flutter.png',
         'isBookmarked': 0
       },
       {
@@ -558,63 +558,63 @@ class DBHelper {
         'subtitle': "Let's Start Flutter Lecture 3",
         'content':
             'Understanding the difference between stateless and stateful widgets.',
-        'image': 'lib/assets/flutter.png',
+        'image': 'assets/flutter.png',
         'isBookmarked': 0
       },
       {
         'title': 'Apps Built with Flutter',
         'subtitle': "Let's Start Flutter Lecture 4",
         'content': 'Understanding layout widgets like Row, Column, Stack, etc.',
-        'image': 'lib/assets/flutter.png',
+        'image': 'assets/flutter.png',
         'isBookmarked': 0
       },
       {
         'title': 'Instalation of Flutter',
         'subtitle': "Let's Start Flutter Lecture 5",
         'content': 'Implementing Material Design in Flutter.',
-        'image': 'lib/assets/flutter.png',
+        'image': 'assets/flutter.png',
         'isBookmarked': 0
       },
       {
         'title': 'Architecture of Flutter',
         'subtitle': "Let's Start Flutter Lecture 6",
         'content': 'Implementing Material Design in Flutter.',
-        'image': 'lib/assets/flutter.png',
+        'image': 'assets/flutter.png',
         'isBookmarked': 0
       },
       {
         'title': 'Types of Layouts Widgets',
         'subtitle': "Let's Start Flutter Lecture 7",
         'content': 'Implementing Material Design in Flutter.',
-        'image': 'lib/assets/flutter.png',
+        'image': 'assets/flutter.png',
         'isBookmarked': 0
       },
       {
         'title': 'Single Child Widgets',
         'subtitle': "Let's Start Flutter Lecture 8",
         'content': 'Implementing Material Design in Flutter.',
-        'image': 'lib/assets/flutter.png',
+        'image': 'assets/flutter.png',
         'isBookmarked': 0
       },
       {
         'title': 'Multiple Child Widgets',
         'subtitle': "Let's Start Flutter Lecture 9",
         'content': 'Implementing Material Design in Flutter.',
-        'image': 'lib/assets/flutter.png',
+        'image': 'assets/flutter.png',
         'isBookmarked': 0
       },
       {
         'title': 'Stateful and Stateless Widgets',
         'subtitle': "Let's Start Flutter Lecture 10",
         'content': 'Implementing Material Design in Flutter.',
-        'image': 'lib/assets/flutter.png',
+        'image': 'assets/flutter.png',
         'isBookmarked': 0
       },
       {
         'title': 'Handling gestures in Flutter',
         'subtitle': "Let's Start Flutter Lecture 11",
         'content': 'Implementing Material Design in Flutter.',
-        'image': 'lib/assets/flutter.png',
+        'image': 'assets/flutter.png',
         'isBookmarked': 0
       },
     ];
