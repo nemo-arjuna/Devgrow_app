@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 name: Devgrow
+=======
+name: devgrow
+>>>>>>> ff1488594e74c4900aa16a61db1010afde79b2ae
 description: "A new Flutter project."
 publish_to: 'none'
 
@@ -24,6 +28,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+<<<<<<< HEAD
   flutter_launcher_icons: ^0.13.1  # ✅ Tambah package untuk app icon
 
 # ✅ Konfigurasi launcher icon
@@ -32,6 +37,8 @@ flutter_icons:
   ios: true
   image_path: "assets/logo.jpg"
 
+=======
+>>>>>>> ff1488594e74c4900aa16a61db1010afde79b2ae
 
 flutter:
   uses-material-design: true

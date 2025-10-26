@@ -24,6 +24,7 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
 
   final List<Map<String, Object>> questions = [
     {
+<<<<<<< HEAD
       "question": "1. Bahasa Dart pertama kali dikembangkan oleh siapa ?",
       "options": ["Facebook", "Microsoft", "Google", "Apple"],
       "answer": "Google",
@@ -67,6 +68,52 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
         'console.log("Hello");'
       ],
       "answer": 'print("Hello");',
+=======
+      "question": "1. Apa tipe data default untuk angka pecahan di Dart?",
+      "options": ["int", "double", "num", "float"],
+      "answer": "double",
+    },
+    {
+      "question":
+          "2. Keyword untuk membuat variabel yang nilainya tidak bisa diubah?",
+      "options": ["var", "final", "const", "static"],
+      "answer": "final",
+    },
+    {
+      "question": "3. Fungsi utama dalam program Dart disebut?",
+      "options": ["start()", "main()", "run()", "init()"],
+      "answer": "main()",
+    },
+    {
+      "question": "4. Operator untuk membandingkan kesamaan di Dart?",
+      "options": ["=", "==", "===", "equals"],
+      "answer": "==",
+    },
+    {
+      "question": "5. Keyword untuk membuat class turunan?",
+      "options": ["inherit", "extends", "implements", "with"],
+      "answer": "extends",
+    },
+    {
+      "question": "6. Fungsi setState() digunakan untuk",
+      "options": [
+        "Menyimpan data global",
+        "Mengubah tema aplikasi",
+        "Refresh UI saat data berubah",
+        "Menghentikan aplikasi"
+      ],
+      "answer": "Refresh UI saat data berubah",
+    },
+    {
+      "question": "7. Dalam Flutter, BuildContext digunakan untuk",
+      "options": [
+        "Mengakses database lokal",
+        "Mengatur navigasi halaman",
+        "Menentukan letak widget di pohon widget",
+        "Menentukan ukuran layar"
+      ],
+      "answer": "Menentukan letak widget di pohon widget",
+>>>>>>> ff1488594e74c4900aa16a61db1010afde79b2ae
     },
   ];
 

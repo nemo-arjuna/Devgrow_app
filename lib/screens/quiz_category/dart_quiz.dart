@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:Devgrow/screens/quiz_category/quiz_dart_lvl1.dart';
 import 'package:Devgrow/screens/quiz_category/quiz_dart_lvl2.dart';
 import 'package:Devgrow/screens/quiz_category/quiz_dart_lvl3.dart';
+=======
+import 'package:devgrow/screens/quiz_category/quiz_dart_lvl1.dart';
+import 'package:devgrow/screens/quiz_category/quiz_dart_lvl2.dart';
+import 'package:devgrow/screens/quiz_category/quiz_dart_lvl3.dart';
+>>>>>>> ff1488594e74c4900aa16a61db1010afde79b2ae
 
 class DartQuizPage extends StatefulWidget {
   const DartQuizPage({super.key});

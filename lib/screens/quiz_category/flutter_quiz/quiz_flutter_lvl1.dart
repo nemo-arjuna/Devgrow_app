@@ -67,6 +67,7 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
       "answer": "bool",
     },
     {
+<<<<<<< HEAD
       "question": "1. Flutter dikembangkan oleh perusahaan apa?",
       "options": [
         "Microsoft",
@@ -75,6 +76,16 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
         "Oracle"
       ],
       "answer": "Google",
+=======
+      "question": "7. Apa perbedaan var dan dynamic?",
+      "options": [
+        "Tidak ada perbedaan",
+        "var harus tetap tipe setelah diisi",
+        "dynamic tipe tetap",
+        "var bisa berubah tipe sesuka hati"
+      ],
+      "answer": "var harus tetap tipe setelah diisi",
+>>>>>>> ff1488594e74c4900aa16a61db1010afde79b2ae
     },
   ];
 

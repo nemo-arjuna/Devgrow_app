@@ -24,6 +24,7 @@ class _DartLevel3QuizPageState extends State<DartLevel3QuizPage> {
 
   final List<Map<String, Object>> questions = [
     {
+<<<<<<< HEAD
       "question": "1. Apa hasil dari kode berikut? \nvar x = 5;\n x += 3;\nprint(x);",
       "options": [
         "5",
@@ -67,6 +68,52 @@ class _DartLevel3QuizPageState extends State<DartLevel3QuizPage> {
         "a"
       ],
       "answer": "Default",
+=======
+      "question": "1. initState() dipanggil saat?",
+      "options": [
+        "Tiap rebuild",
+        "Awal widget dibuat",
+        "Setelah dispose",
+        "Saat klik tombol"
+      ],
+      "answer": "Awal widget dibuat",
+    },
+    {
+      "question":
+          "Keyword untuk membuat variabel yang nilainya tidak bisa diubah?",
+      "options": ["var", "final", "const", "static"],
+      "answer": "final",
+    },
+    {
+      "question": "Fungsi utama dalam program Dart disebut?",
+      "options": ["start()", "main()", "run()", "init()"],
+      "answer": "main()",
+    },
+    {
+      "question": "Operator untuk membandingkan kesamaan di Dart?",
+      "options": ["=", "==", "===", "equals"],
+      "answer": "==",
+    },
+    {
+      "question": "Keyword untuk membuat class turunan?",
+      "options": ["inherit", "extends", "implements", "with"],
+      "answer": "extends",
+    },
+    {
+      "question": "Tipe data untuk true/false di Dart?",
+      "options": ["boolean", "bool", "Boolean", "int"],
+      "answer": "bool",
+    },
+    {
+      "question": "Apa perbedaan var dan dynamic?",
+      "options": [
+        "Tidak ada perbedaan",
+        "var harus tetap tipe setelah diisi",
+        "dynamic tipe tetap",
+        "var bisa berubah tipe sesuka hati"
+      ],
+      "answer": "var harus tetap tipe setelah diisi",
+>>>>>>> ff1488594e74c4900aa16a61db1010afde79b2ae
     },
   ];
 
