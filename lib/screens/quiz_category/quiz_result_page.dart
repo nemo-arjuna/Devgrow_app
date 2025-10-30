@@ -130,7 +130,7 @@ class _QuizResultWidgetState extends State<QuizResultWidget> {
                 Colors.green,
                 Colors.blue,
                 Colors.red,
-                Colors.purple
+                Colors.purple,
               ],
             ),
 
@@ -198,18 +198,7 @@ class _QuizResultWidgetState extends State<QuizResultWidget> {
                 const SizedBox(height: 20),
                 buildPixelButton(
                   label: "⬅️ Kembali ke Level",
-                  onPressed: () {
-                    // Tutup dialog hasil quiz
-                    Navigator.pop(context);
-                    // Kembali ke halaman pemilihan level
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DartQuizPage(),
-                      ),
-                      (route) => route.isFirst, // Kembali ke halaman pertama
-                    );
-                  },
+                  onPressed: widget.onBackToLevels,
                 ),
               ],
             ),

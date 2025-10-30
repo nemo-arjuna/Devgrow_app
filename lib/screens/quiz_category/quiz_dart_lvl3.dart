@@ -20,92 +20,81 @@ class _DartLevel3QuizPageState extends State<DartLevel3QuizPage> {
   bool quizStarted = false;
 
   final player = AudioPlayer(); // Countdown & effect
-  final bgmPlayer = AudioPlayer(); // Bgm
+  final bgmPlayer = AudioPlayer(); // Background music
 
   final List<Map<String, Object>> questions = [
     {
-<<<<<<< HEAD
-      "question": "1. Apa hasil dari kode berikut? \nvar x = 5;\n x += 3;\nprint(x);",
-      "options": [
-        "5",
-        "3",
-        "8",
-        "Error"
-      ],
+      "question": "1. Apa hasil dari kode berikut?\n\nvar x = 5;\nx += 3;\nprint(x);",
+      "options": ["5", "3", "8", "Error"],
       "answer": "8",
     },
     {
-      "question":"2. Bagaimana cara mendeklarasikan list di Dart?",
-      "options": ["List numbers = [1, 2, 3];", " numbers = (1, 2, 3);", "list numbers = 1,2,3;", "var numbers = list(1,2,3);"],
+      "question": "2. Bagaimana cara mendeklarasikan list di Dart?",
+      "options": [
+        "List numbers = [1, 2, 3];",
+        "numbers = (1, 2, 3);",
+        "list numbers = 1,2,3;",
+        "var numbers = list(1,2,3);"
+      ],
       "answer": "List numbers = [1, 2, 3];",
     },
     {
       "question": "3. Keyword untuk mendefinisikan konstanta di Dart adalah:",
-      "options": ["var", "let", "final dan cost", "static"],
-      "answer": "final dan cost",
+      "options": ["var", "let", "final dan const", "static"],
+      "answer": "final dan const",
     },
     {
-      "question": '4. Apa hasil dari kode berikut?\nfinal name = "Nemo";\nname = "Alex";\nprint(name);',
-      "options": ["Nemo", "Alex", "Error", "tidak menampilkan apa pun"],
+      "question": '4. Apa hasil dari kode berikut?\n\nfinal name = "Nemo";\nname = "Alex";\nprint(name);',
+      "options": ["Nemo", "Alex", "Error", "Tidak menampilkan apa pun"],
       "answer": "Error",
     },
     {
       "question": "5. Fungsi anonim (anonymous function) di Dart disebut juga:",
       "options": ["Lambda", "Inline Function", "Arrow Function", "Semua benar"],
-      "answer": "extends",
+      "answer": "Lambda",
     },
     {
       "question": "6. Operator ?? di Dart digunakan untuk:",
-      "options": ["Membandingkan dua nilai", "Mengembalikan nilai jika nul", "Menambahkan dua nila", "Menentukan tipe variabel"],
+      "options": [
+        "Membandingkan dua nilai",
+        "Mengembalikan nilai jika null",
+        "Menambahkan dua nilai",
+        "Menentukan tipe variabel"
+      ],
       "answer": "Mengembalikan nilai jika null",
     },
     {
-      "question": 'Apa hasil dari kode berikut?\nvar a = null;\nprint(a ?? "Default");',
-      "options": [
-        "null",
-        "Default",
-        "Error",
-        "a"
-      ],
+      "question": '7. Apa hasil dari kode berikut?\n\nvar a = null;\nprint(a ?? "Default");',
+      "options": ["null", "Default", "Error", "a"],
       "answer": "Default",
-=======
-      "question": "1. initState() dipanggil saat?",
-      "options": [
-        "Tiap rebuild",
-        "Awal widget dibuat",
-        "Setelah dispose",
-        "Saat klik tombol"
-      ],
-      "answer": "Awal widget dibuat",
     },
     {
-      "question":
-          "Keyword untuk membuat variabel yang nilainya tidak bisa diubah?",
+      "question": "8. Keyword untuk membuat variabel yang nilainya tidak bisa diubah?",
       "options": ["var", "final", "const", "static"],
       "answer": "final",
     },
     {
-      "question": "Fungsi utama dalam program Dart disebut?",
+      "question": "9. Fungsi utama dalam program Dart disebut?",
       "options": ["start()", "main()", "run()", "init()"],
       "answer": "main()",
     },
     {
-      "question": "Operator untuk membandingkan kesamaan di Dart?",
+      "question": "10. Operator untuk membandingkan kesamaan di Dart?",
       "options": ["=", "==", "===", "equals"],
       "answer": "==",
     },
     {
-      "question": "Keyword untuk membuat class turunan?",
+      "question": "11. Keyword untuk membuat class turunan?",
       "options": ["inherit", "extends", "implements", "with"],
       "answer": "extends",
     },
     {
-      "question": "Tipe data untuk true/false di Dart?",
+      "question": "12. Tipe data untuk true/false di Dart?",
       "options": ["boolean", "bool", "Boolean", "int"],
       "answer": "bool",
     },
     {
-      "question": "Apa perbedaan var dan dynamic?",
+      "question": "13. Apa perbedaan var dan dynamic?",
       "options": [
         "Tidak ada perbedaan",
         "var harus tetap tipe setelah diisi",
@@ -113,7 +102,6 @@ class _DartLevel3QuizPageState extends State<DartLevel3QuizPage> {
         "var bisa berubah tipe sesuka hati"
       ],
       "answer": "var harus tetap tipe setelah diisi",
->>>>>>> ff1488594e74c4900aa16a61db1010afde79b2ae
     },
   ];
 
@@ -129,21 +117,13 @@ class _DartLevel3QuizPageState extends State<DartLevel3QuizPage> {
 
     Timer.periodic(const Duration(seconds: 1), (t) async {
       if (countdown > 1) {
-        setState(() {
-          countdown--;
-        });
+        setState(() => countdown--);
         await player.play(AssetSource("sounds/countdown.mp3"));
       } else if (countdown == 1) {
-        setState(() {
-          countdown = 0;
-        });
-
+        setState(() => countdown = 0);
         Future.delayed(const Duration(seconds: 1), () async {
           t.cancel();
-          setState(() {
-            quizStarted = true;
-          });
-          // Background music looping
+          setState(() => quizStarted = true);
           await bgmPlayer.setReleaseMode(ReleaseMode.loop);
           await bgmPlayer.play(AssetSource("sounds/quiz_sound.mp3"));
           startTimer();
@@ -168,9 +148,7 @@ class _DartLevel3QuizPageState extends State<DartLevel3QuizPage> {
 
   void checkAnswer(String selected) {
     String correctAnswer = questions[currentQuestionIndex]["answer"] as String;
-    if (selected == correctAnswer) {
-      score++;
-    }
+    if (selected == correctAnswer) score++;
     nextQuestion();
   }
 
@@ -178,17 +156,12 @@ class _DartLevel3QuizPageState extends State<DartLevel3QuizPage> {
     timer?.cancel();
 
     if (currentQuestionIndex < questions.length - 1) {
-      setState(() {
-        currentQuestionIndex++;
-      });
+      setState(() => currentQuestionIndex++);
       startTimer();
     } else {
-      // Stop bgm saat quiz selesai
       await bgmPlayer.stop();
 
-      setState(() {
-        quizStarted = false;
-      });
+      setState(() => quizStarted = false);
 
       showDialog(
         context: context,
@@ -206,8 +179,8 @@ class _DartLevel3QuizPageState extends State<DartLevel3QuizPage> {
             });
           },
           onBackToLevels: () {
-            Navigator.pop(context); // tutup dialog
-            Navigator.pop(context); // kembali ke halaman level
+            Navigator.pop(context);
+            Navigator.pop(context);
           },
         ),
       );
@@ -229,7 +202,7 @@ class _DartLevel3QuizPageState extends State<DartLevel3QuizPage> {
     return Theme(
       data: Theme.of(context).copyWith(
         textTheme: Theme.of(context).textTheme.apply(
-              fontFamily: "Minecraft", // Font
+              fontFamily: "Minecraft",
             ),
       ),
       child: Scaffold(
@@ -246,7 +219,6 @@ class _DartLevel3QuizPageState extends State<DartLevel3QuizPage> {
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // 🔹 Timer
                       Text(
                         "⏳ $timeLeft detik",
                         style: const TextStyle(
@@ -256,8 +228,6 @@ class _DartLevel3QuizPageState extends State<DartLevel3QuizPage> {
                         ),
                       ),
                       const SizedBox(height: 20),
-
-                      // Pertanyaan
                       Text(
                         question["question"] as String,
                         textAlign: TextAlign.center,
@@ -267,22 +237,23 @@ class _DartLevel3QuizPageState extends State<DartLevel3QuizPage> {
                           color: Colors.white,
                           shadows: [
                             Shadow(
-                                blurRadius: 6,
-                                color: Colors.black,
-                                offset: Offset(2, 2))
+                              blurRadius: 6,
+                              color: Colors.black,
+                              offset: Offset(2, 2),
+                            ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 30),
-
-                      // Edit pilihan ganda
                       ...(question["options"] as List<String>).map((option) {
                         return GestureDetector(
                           onTap: () => checkAnswer(option),
                           child: Container(
                             margin: const EdgeInsets.symmetric(vertical: 6),
                             padding: const EdgeInsets.symmetric(
-                                vertical: 14, horizontal: 12),
+                              vertical: 14,
+                              horizontal: 12,
+                            ),
                             width: double.infinity,
                             decoration: BoxDecoration(
                               image: const DecorationImage(
@@ -307,9 +278,10 @@ class _DartLevel3QuizPageState extends State<DartLevel3QuizPage> {
                                   fontWeight: FontWeight.bold,
                                   shadows: [
                                     Shadow(
-                                        blurRadius: 6,
-                                        color: Colors.black,
-                                        offset: Offset(2, 2))
+                                      blurRadius: 6,
+                                      color: Colors.black,
+                                      offset: Offset(2, 2),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -321,18 +293,16 @@ class _DartLevel3QuizPageState extends State<DartLevel3QuizPage> {
                   )
                 : AnimatedSwitcher(
                     duration: const Duration(milliseconds: 600),
-                    transitionBuilder: (child, animation) {
-                      return ScaleTransition(
-                        scale: CurvedAnimation(
-                          parent: animation,
-                          curve: Curves.easeOutBack,
-                        ),
-                        child: FadeTransition(
-                          opacity: animation,
-                          child: child,
-                        ),
-                      );
-                    },
+                    transitionBuilder: (child, animation) => ScaleTransition(
+                      scale: CurvedAnimation(
+                        parent: animation,
+                        curve: Curves.easeOutBack,
+                      ),
+                      child: FadeTransition(
+                        opacity: animation,
+                        child: child,
+                      ),
+                    ),
                     child: Text(
                       countdown > 0 ? "$countdown" : "Mulai!",
                       key: ValueKey(countdown),
@@ -342,9 +312,10 @@ class _DartLevel3QuizPageState extends State<DartLevel3QuizPage> {
                         color: Colors.yellow,
                         shadows: [
                           Shadow(
-                              blurRadius: 8,
-                              color: Colors.black,
-                              offset: Offset(3, 3))
+                            blurRadius: 8,
+                            color: Colors.black,
+                            offset: Offset(3, 3),
+                          ),
                         ],
                       ),
                     ),

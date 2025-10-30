@@ -10,28 +10,15 @@ class CategoryProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   Future<void> fetchCategories() async {
-    print("Starting fetchCategories...");
+    _isLoading = true;
+    notifyListeners();
     try {
-      _isLoading = true;
-      notifyListeners();
-
       _categories = await DBHelper.instance.getAllCategories();
-      print("Categories fetched successfully: ${_categories.length} items");
-
-      if (_categories.isEmpty) {
-        print("Warning: No categories found in database");
-      } else {
-        for (var category in _categories) {
-          print("Category found: ${category.name}");
-        }
-      }
-    } catch (error) {
-      print("Error fetching categories: $error");
+    } catch (e) {
       _categories = [];
     } finally {
       _isLoading = false;
       notifyListeners();
-      print("fetchCategories completed");
     }
   }
 }

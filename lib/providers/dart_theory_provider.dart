@@ -21,16 +21,14 @@ class DartTheoryProvider extends ChangeNotifier {
   Future<void> fetchTheories() async {
     _isLoading = true;
     notifyListeners();
-
     try {
       _theories = await DBHelper.instance.getAllDartTheories();
     } catch (e) {
-      print("Error fetching dart theories: $e");
       _theories = [];
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-
-    _isLoading = false;
-    notifyListeners();
   }
 
   void setSearchQuery(String query) {
@@ -39,17 +37,15 @@ class DartTheoryProvider extends ChangeNotifier {
   }
 
   Future<void> toggleBookmark(int id) async {
-    try {
-      final index = _theories.indexWhere((t) => t.id == id);
-      if (index != -1) {
-        final theory = _theories[index];
-        await DBHelper.instance
-            .toggleDartTheoryBookmark(id, !theory.isBookmarked);
+    final index = _theories.indexWhere((t) => t.id == id);
+    if (index != -1) {
+      final theory = _theories[index];
+      try {
+        await DBHelper.instance.toggleDartTheoryBookmark(
+            id, !theory.isBookmarked);
         _theories[index] = theory.copyWith(isBookmarked: !theory.isBookmarked);
         notifyListeners();
-      }
-    } catch (e) {
-      print("Error toggling bookmark: $e");
+      } catch (e) {}
     }
   }
 }

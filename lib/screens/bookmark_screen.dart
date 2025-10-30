@@ -124,11 +124,10 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.stars),
-<<<<<<< HEAD
+
             label: "Quiz",
-=======
-            label: "Growpoints",
->>>>>>> ff1488594e74c4900aa16a61db1010afde79b2ae
+
+
           ),
         ],
       ),

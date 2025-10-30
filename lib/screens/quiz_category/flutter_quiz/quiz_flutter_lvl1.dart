@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'result.dart';
 
-class FlutterLevel1QuizPage extends StatefulWidget {
-  const FlutterLevel1QuizPage({super.key});
+class FlutterLevel1Quiz extends StatefulWidget {
+  const FlutterLevel1Quiz({super.key});
 
   @override
-  State<FlutterLevel1QuizPage> createState() => _FlutterLevel1QuizPageState();
+  State<FlutterLevel1Quiz> createState() => _FlutterLevel1QuizState();
 }
 
-class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
+class _FlutterLevel1QuizState extends State<FlutterLevel1Quiz> {
   int currentQuestionIndex = 0;
   int score = 0;
   int timeLeft = 10;
@@ -20,12 +20,11 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
   bool quizStarted = false;
 
   final player = AudioPlayer(); // Countdown & effect
-  final bgmPlayer = AudioPlayer(); // Bgm
+  final bgmPlayer = AudioPlayer(); // Background music
 
   final List<Map<String, Object>> questions = [
     {
-      "question":
-          "1. Bahasa pemrograman utama untuk membuat aplikasi Flutter adalah",
+      "question": "1. Bahasa pemrograman utama untuk membuat aplikasi Flutter adalah",
       "options": ["Java", "Dart", "Kotlin", "Swift"],
       "answer": "Dart",
     },
@@ -40,8 +39,7 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
       "answer": "flutter create <nama_proyek>",
     },
     {
-      "question":
-          "3. Widget dasar yang digunakan untuk menampilkan teks di Flutter adalah",
+      "question": "3. Widget dasar yang digunakan untuk menampilkan teks di Flutter adalah",
       "options": ["TextWidget()", "StringWidget()", "Text()", "Label()"],
       "answer": "Text()",
     },
@@ -56,8 +54,7 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
       "answer": "Titik awal eksekusi program",
     },
     {
-      "question":
-          "5. Widget yang digunakan untuk menampung banyak widget anak secara vertikal?",
+      "question": "5. Widget yang digunakan untuk menampung banyak widget anak secara vertikal?",
       "options": ["Row", "Stack", "Column", "Container"],
       "answer": "Column",
     },
@@ -67,25 +64,9 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
       "answer": "bool",
     },
     {
-<<<<<<< HEAD
-      "question": "1. Flutter dikembangkan oleh perusahaan apa?",
-      "options": [
-        "Microsoft",
-        "Facebook",
-        "Google",
-        "Oracle"
-      ],
+      "question": "7. Flutter dikembangkan oleh perusahaan apa?",
+      "options": ["Microsoft", "Facebook", "Google", "Oracle"],
       "answer": "Google",
-=======
-      "question": "7. Apa perbedaan var dan dynamic?",
-      "options": [
-        "Tidak ada perbedaan",
-        "var harus tetap tipe setelah diisi",
-        "dynamic tipe tetap",
-        "var bisa berubah tipe sesuka hati"
-      ],
-      "answer": "var harus tetap tipe setelah diisi",
->>>>>>> ff1488594e74c4900aa16a61db1010afde79b2ae
     },
   ];
 
@@ -115,7 +96,6 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
           setState(() {
             quizStarted = true;
           });
-          // Background music looping
           await bgmPlayer.setReleaseMode(ReleaseMode.loop);
           await bgmPlayer.play(AssetSource("sounds/quiz_sound.mp3"));
           startTimer();
@@ -155,9 +135,7 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
       });
       startTimer();
     } else {
-      // Stop bgm saat quiz selesai
       await bgmPlayer.stop();
-
       setState(() {
         quizStarted = false;
       });
@@ -178,8 +156,8 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
             });
           },
           onBackToLevels: () {
-            Navigator.pop(context); // tutup dialog
-            Navigator.pop(context); // kembali ke halaman level
+            Navigator.pop(context);
+            Navigator.pop(context);
           },
         ),
       );
@@ -200,9 +178,7 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
 
     return Theme(
       data: Theme.of(context).copyWith(
-        textTheme: Theme.of(context).textTheme.apply(
-              fontFamily: "Minecraft", // Font
-            ),
+        textTheme: Theme.of(context).textTheme.apply(fontFamily: "Minecraft"),
       ),
       child: Scaffold(
         body: Container(
@@ -218,7 +194,6 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // 🔹 Timer
                       Text(
                         "⏳ $timeLeft detik",
                         style: const TextStyle(
@@ -228,8 +203,6 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
                         ),
                       ),
                       const SizedBox(height: 20),
-
-                      // Pertanyaan
                       Text(
                         question["question"] as String,
                         textAlign: TextAlign.center,
@@ -239,15 +212,14 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
                           color: Colors.white,
                           shadows: [
                             Shadow(
-                                blurRadius: 6,
-                                color: Colors.black,
-                                offset: Offset(2, 2))
+                              blurRadius: 6,
+                              color: Colors.black,
+                              offset: Offset(2, 2),
+                            ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 30),
-
-                      // Edit pilihan ganda
                       ...(question["options"] as List<String>).map((option) {
                         return GestureDetector(
                           onTap: () => checkAnswer(option),
@@ -267,7 +239,7 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
                                   color: Colors.black54,
                                   blurRadius: 4,
                                   offset: Offset(2, 2),
-                                )
+                                ),
                               ],
                             ),
                             child: Center(
@@ -279,9 +251,10 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
                                   fontWeight: FontWeight.bold,
                                   shadows: [
                                     Shadow(
-                                        blurRadius: 6,
-                                        color: Colors.black,
-                                        offset: Offset(2, 2))
+                                      blurRadius: 6,
+                                      color: Colors.black,
+                                      offset: Offset(2, 2),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -314,9 +287,10 @@ class _FlutterLevel1QuizPageState extends State<FlutterLevel1QuizPage> {
                         color: Colors.yellow,
                         shadows: [
                           Shadow(
-                              blurRadius: 8,
-                              color: Colors.black,
-                              offset: Offset(3, 3))
+                            blurRadius: 8,
+                            color: Colors.black,
+                            offset: Offset(3, 3),
+                          ),
                         ],
                       ),
                     ),

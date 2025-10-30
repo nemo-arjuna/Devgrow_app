@@ -58,7 +58,7 @@ class _DartTheoryPageState extends State<DartTheoryPage> {
         onTap: () {
           switch (theory.title) {
             case 'Dart - Introduction':
-<<<<<<< HEAD
+
              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const DartIntroductionPage()), );
@@ -82,7 +82,7 @@ class _DartTheoryPageState extends State<DartTheoryPage> {
              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const CommentsInDartPage()), );
-=======
+
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -121,7 +121,7 @@ class _DartTheoryPageState extends State<DartTheoryPage> {
                   builder: (context) => const CommentsInDartPage(),
                 ),
               );
->>>>>>> ff1488594e74c4900aa16a61db1010afde79b2ae
+
               break;
             // tambahkan kasus untuk materi lainnya sesuai dengan halaman yang sudah Anda buat
             default:

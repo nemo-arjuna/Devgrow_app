@@ -167,8 +167,8 @@ class _DartLevel1QuizPageState extends State<DartLevel1QuizPage> {
             });
           },
           onBackToLevels: () {
-            Navigator.pop(context); // tutup dialog
-            Navigator.pop(context); // kembali ke halaman level
+            Navigator.pop(context);
+            Navigator.pop(context);
           },
         ),
       );
@@ -189,9 +189,7 @@ class _DartLevel1QuizPageState extends State<DartLevel1QuizPage> {
 
     return Theme(
       data: Theme.of(context).copyWith(
-        textTheme: Theme.of(context).textTheme.apply(
-              fontFamily: "Minecraft", // Font
-            ),
+        textTheme: Theme.of(context).textTheme.apply(fontFamily: "Minecraft"),
       ),
       child: Scaffold(
         body: Container(
@@ -207,7 +205,6 @@ class _DartLevel1QuizPageState extends State<DartLevel1QuizPage> {
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // 🔹 Timer
                       Text(
                         "⏳ $timeLeft detik",
                         style: const TextStyle(
@@ -217,8 +214,6 @@ class _DartLevel1QuizPageState extends State<DartLevel1QuizPage> {
                         ),
                       ),
                       const SizedBox(height: 20),
-
-                      // Pertanyaan
                       Text(
                         question["question"] as String,
                         textAlign: TextAlign.center,
@@ -228,15 +223,14 @@ class _DartLevel1QuizPageState extends State<DartLevel1QuizPage> {
                           color: Colors.white,
                           shadows: [
                             Shadow(
-                                blurRadius: 6,
-                                color: Colors.black,
-                                offset: Offset(2, 2))
+                              blurRadius: 6,
+                              color: Colors.black,
+                              offset: Offset(2, 2),
+                            )
                           ],
                         ),
                       ),
                       const SizedBox(height: 30),
-
-                      // Edit pilihan ganda
                       ...(question["options"] as List<String>).map((option) {
                         return GestureDetector(
                           onTap: () => checkAnswer(option),
@@ -256,7 +250,7 @@ class _DartLevel1QuizPageState extends State<DartLevel1QuizPage> {
                                   color: Colors.black54,
                                   blurRadius: 4,
                                   offset: Offset(2, 2),
-                                )
+                                ),
                               ],
                             ),
                             child: Center(
@@ -268,9 +262,10 @@ class _DartLevel1QuizPageState extends State<DartLevel1QuizPage> {
                                   fontWeight: FontWeight.bold,
                                   shadows: [
                                     Shadow(
-                                        blurRadius: 6,
-                                        color: Colors.black,
-                                        offset: Offset(2, 2))
+                                      blurRadius: 6,
+                                      color: Colors.black,
+                                      offset: Offset(2, 2),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -303,9 +298,10 @@ class _DartLevel1QuizPageState extends State<DartLevel1QuizPage> {
                         color: Colors.yellow,
                         shadows: [
                           Shadow(
-                              blurRadius: 8,
-                              color: Colors.black,
-                              offset: Offset(3, 3))
+                            blurRadius: 8,
+                            color: Colors.black,
+                            offset: Offset(3, 3),
+                          )
                         ],
                       ),
                     ),

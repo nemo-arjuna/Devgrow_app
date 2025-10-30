@@ -28,9 +28,8 @@ class _FlutterQuizResultWidgetState extends State<FlutterQuizResultWidget> {
   @override
   void initState() {
     super.initState();
-    _confettiController =
-        ConfettiController(duration: const Duration(seconds: 4));
-    _confettiController.play(); // langsung mainkan saat masuk halaman
+    _confettiController = ConfettiController(duration: const Duration(seconds: 4));
+    _confettiController.play();
   }
 
   @override
@@ -130,7 +129,7 @@ class _FlutterQuizResultWidgetState extends State<FlutterQuizResultWidget> {
                 Colors.green,
                 Colors.blue,
                 Colors.red,
-                Colors.purple
+                Colors.purple,
               ],
             ),
 
@@ -155,7 +154,7 @@ class _FlutterQuizResultWidgetState extends State<FlutterQuizResultWidget> {
                         blurRadius: 8,
                         color: Colors.black,
                         offset: Offset(3, 3),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -199,15 +198,13 @@ class _FlutterQuizResultWidgetState extends State<FlutterQuizResultWidget> {
                 buildPixelButton(
                   label: "⬅️ Kembali ke Level",
                   onPressed: () {
-                    // Tutup dialog hasil quiz
                     Navigator.pop(context);
-                    // Kembali ke halaman pemilihan level
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const FlutterQuizPage(),
+                        builder: (context) => const FlutterQuiz(),
                       ),
-                      (route) => route.isFirst, // Kembali ke halaman pertama
+                      (route) => route.isFirst,
                     );
                   },
                 ),

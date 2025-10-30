@@ -19,24 +19,28 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
   int countdown = 3;
   bool quizStarted = false;
 
-  final player = AudioPlayer(); // Countdown & effect
-  final bgmPlayer = AudioPlayer(); // Bgm
+  final player = AudioPlayer();
+  final bgmPlayer = AudioPlayer();
 
   final List<Map<String, Object>> questions = [
     {
-<<<<<<< HEAD
-      "question": "1. Bahasa Dart pertama kali dikembangkan oleh siapa ?",
+      "question": "1. Bahasa Dart pertama kali dikembangkan oleh siapa?",
       "options": ["Facebook", "Microsoft", "Google", "Apple"],
       "answer": "Google",
     },
     {
-      "question": "2.File Dart biasanya memiliki ekstensi file apa ?",
+      "question": "2. File Dart biasanya memiliki ekstensi apa?",
       "options": [".dart", ".drt", ".dlang", ".dartlang"],
       "answer": ".dart",
     },
     {
       "question": "3. Perintah untuk menjalankan program Dart di terminal adalah:",
-      "options": ["dart start main.dart", "dart run main.dart", "run dart main.dart", "execute dart main.dart"],
+      "options": [
+        "dart start main.dart",
+        "dart run main.dart",
+        "run dart main.dart",
+        "execute dart main.dart"
+      ],
       "answer": "dart run main.dart",
     },
     {
@@ -45,18 +49,14 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
       "answer": "main()",
     },
     {
-      "question": "5. Tipe data yang digunakan untuk menyimpan angka pecahan di Dart adalah:",
+      "question":
+          "5. Tipe data yang digunakan untuk menyimpan angka pecahan di Dart adalah:",
       "options": ["int", "double", "float", "num"],
       "answer": "double",
     },
     {
-      "question": "6. Berikut ini bukan tipe data \n bawaan di Dart adalah:",
-      "options": [
-        "String",
-        "bool",
-        "char",
-        "int"
-      ],
+      "question": "6. Berikut ini bukan tipe data bawaan di Dart adalah:",
+      "options": ["String", "bool", "char", "int"],
       "answer": "char",
     },
     {
@@ -68,34 +68,20 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
         'console.log("Hello");'
       ],
       "answer": 'print("Hello");',
-=======
-      "question": "1. Apa tipe data default untuk angka pecahan di Dart?",
-      "options": ["int", "double", "num", "float"],
-      "answer": "double",
     },
     {
       "question":
-          "2. Keyword untuk membuat variabel yang nilainya tidak bisa diubah?",
+          "8. Keyword untuk membuat variabel yang nilainya tidak bisa diubah?",
       "options": ["var", "final", "const", "static"],
       "answer": "final",
     },
     {
-      "question": "3. Fungsi utama dalam program Dart disebut?",
-      "options": ["start()", "main()", "run()", "init()"],
-      "answer": "main()",
-    },
-    {
-      "question": "4. Operator untuk membandingkan kesamaan di Dart?",
+      "question": "9. Operator untuk membandingkan kesamaan di Dart?",
       "options": ["=", "==", "===", "equals"],
       "answer": "==",
     },
     {
-      "question": "5. Keyword untuk membuat class turunan?",
-      "options": ["inherit", "extends", "implements", "with"],
-      "answer": "extends",
-    },
-    {
-      "question": "6. Fungsi setState() digunakan untuk",
+      "question": "10. Fungsi setState() digunakan untuk:",
       "options": [
         "Menyimpan data global",
         "Mengubah tema aplikasi",
@@ -103,17 +89,6 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
         "Menghentikan aplikasi"
       ],
       "answer": "Refresh UI saat data berubah",
-    },
-    {
-      "question": "7. Dalam Flutter, BuildContext digunakan untuk",
-      "options": [
-        "Mengakses database lokal",
-        "Mengatur navigasi halaman",
-        "Menentukan letak widget di pohon widget",
-        "Menentukan ukuran layar"
-      ],
-      "answer": "Menentukan letak widget di pohon widget",
->>>>>>> ff1488594e74c4900aa16a61db1010afde79b2ae
     },
   ];
 
@@ -143,7 +118,6 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
           setState(() {
             quizStarted = true;
           });
-          // Background music looping
           await bgmPlayer.setReleaseMode(ReleaseMode.loop);
           await bgmPlayer.play(AssetSource("sounds/quiz_sound.mp3"));
           startTimer();
@@ -183,7 +157,6 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
       });
       startTimer();
     } else {
-      // Stop bgm saat quiz selesai
       await bgmPlayer.stop();
 
       setState(() {
@@ -206,8 +179,8 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
             });
           },
           onBackToLevels: () {
-            Navigator.pop(context); // tutup dialog
-            Navigator.pop(context); // kembali ke halaman level
+            Navigator.pop(context);
+            Navigator.pop(context);
           },
         ),
       );
@@ -229,7 +202,7 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
     return Theme(
       data: Theme.of(context).copyWith(
         textTheme: Theme.of(context).textTheme.apply(
-              fontFamily: "Minecraft", // Font
+              fontFamily: "Minecraft",
             ),
       ),
       child: Scaffold(
@@ -246,7 +219,6 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // 🔹 Timer
                       Text(
                         "⏳ $timeLeft detik",
                         style: const TextStyle(
@@ -256,8 +228,6 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
                         ),
                       ),
                       const SizedBox(height: 20),
-
-                      // Pertanyaan
                       Text(
                         question["question"] as String,
                         textAlign: TextAlign.center,
@@ -267,15 +237,14 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
                           color: Colors.white,
                           shadows: [
                             Shadow(
-                                blurRadius: 6,
-                                color: Colors.black,
-                                offset: Offset(2, 2))
+                              blurRadius: 6,
+                              color: Colors.black,
+                              offset: Offset(2, 2),
+                            ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 30),
-
-                      // Edit pilihan ganda
                       ...(question["options"] as List<String>).map((option) {
                         return GestureDetector(
                           onTap: () => checkAnswer(option),
@@ -295,7 +264,7 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
                                   color: Colors.black54,
                                   blurRadius: 4,
                                   offset: Offset(2, 2),
-                                )
+                                ),
                               ],
                             ),
                             child: Center(
@@ -307,9 +276,10 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
                                   fontWeight: FontWeight.bold,
                                   shadows: [
                                     Shadow(
-                                        blurRadius: 6,
-                                        color: Colors.black,
-                                        offset: Offset(2, 2))
+                                      blurRadius: 6,
+                                      color: Colors.black,
+                                      offset: Offset(2, 2),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -342,9 +312,10 @@ class _DartLevel2QuizPageState extends State<DartLevel2QuizPage> {
                         color: Colors.yellow,
                         shadows: [
                           Shadow(
-                              blurRadius: 8,
-                              color: Colors.black,
-                              offset: Offset(3, 3))
+                            blurRadius: 8,
+                            color: Colors.black,
+                            offset: Offset(3, 3),
+                          )
                         ],
                       ),
                     ),

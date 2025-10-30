@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:Devgrow/screens/quiz_category/quiz_dart_lvl1.dart';
 import 'package:Devgrow/screens/quiz_category/quiz_dart_lvl2.dart';
 import 'package:Devgrow/screens/quiz_category/quiz_dart_lvl3.dart';
-=======
-import 'package:devgrow/screens/quiz_category/quiz_dart_lvl1.dart';
-import 'package:devgrow/screens/quiz_category/quiz_dart_lvl2.dart';
-import 'package:devgrow/screens/quiz_category/quiz_dart_lvl3.dart';
->>>>>>> ff1488594e74c4900aa16a61db1010afde79b2ae
 
 class DartQuizPage extends StatefulWidget {
   const DartQuizPage({super.key});
@@ -57,7 +51,7 @@ class _DartQuizPageState extends State<DartQuizPage> {
             fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.white,
-            fontFamily: "Minecraft", // pakai font pixel
+            fontFamily: "Minecraft",
             shadows: [
               Shadow(
                 blurRadius: 6,
@@ -76,7 +70,7 @@ class _DartQuizPageState extends State<DartQuizPage> {
     return Scaffold(
       body: Stack(
         children: [
-          // 🔹 Background RPG
+          // 🔹 Background
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -92,7 +86,7 @@ class _DartQuizPageState extends State<DartQuizPage> {
             left: 310,
             child: buildLevelButton(
               imagePath: "assets/level_1.png",
-              label: " Lvl 1⚔️",
+              label: "Lvl 1 ⚔️",
               radius: 22,
               level: "Level 1",
             ),
@@ -104,7 +98,7 @@ class _DartQuizPageState extends State<DartQuizPage> {
             right: 335,
             child: buildLevelButton(
               imagePath: "assets/level_2.png",
-              label: " Lvl 2⚔️",
+              label: "Lvl 2 ⚔️",
               radius: 25,
               level: "Level 2",
             ),
@@ -116,13 +110,13 @@ class _DartQuizPageState extends State<DartQuizPage> {
             left: 150,
             child: buildLevelButton(
               imagePath: "assets/level_3.png",
-              label: " Lvl 3⚔️",
+              label: "Lvl 3 ⚔️",
               radius: 28,
               level: "Level 3",
             ),
           ),
 
-          // 🔹 Tombol "Select Level" animasi pop in/out
+          // 🔹 Tombol "Select Level"
           Align(
             alignment: Alignment.bottomCenter,
             child: AnimatedSwitcher(
@@ -132,10 +126,7 @@ class _DartQuizPageState extends State<DartQuizPage> {
               transitionBuilder: (child, animation) {
                 return ScaleTransition(
                   scale: animation,
-                  child: FadeTransition(
-                    opacity: animation,
-                    child: child,
-                  ),
+                  child: FadeTransition(opacity: animation, child: child),
                 );
               },
               child: selectedLevel == null
@@ -148,16 +139,13 @@ class _DartQuizPageState extends State<DartQuizPage> {
                         vertical: 12,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.green.shade700, // warna rumput
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 4, // border pixel
-                        ),
-                        borderRadius: BorderRadius.zero, // kotak pixel
+                        color: Colors.green.shade700,
+                        border: Border.all(color: Colors.black, width: 4),
+                        borderRadius: BorderRadius.zero,
                         boxShadow: const [
                           BoxShadow(
                             color: Colors.black,
-                            offset: Offset(4, 4), // shadow pixel
+                            offset: Offset(4, 4),
                           ),
                         ],
                         image: const DecorationImage(
@@ -214,7 +202,7 @@ class _DartQuizPageState extends State<DartQuizPage> {
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            fontFamily: "Minecraft", // Minecraft vibe
+                            fontFamily: "Minecraft",
                             shadows: [
                               Shadow(
                                 blurRadius: 4,
